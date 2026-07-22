@@ -1,0 +1,42 @@
+const CACHE_NAME = 'ug-2026-v1';
+
+// Устанавливаем и сразу кэшируем главную страницу
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(['./', './index.html']);
+    })
+  );
+  self.skipWaiting();
+});
+
+// Активация и удаление старых кэшей (если обновите приложение)
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(keys => Promise.all(
+      keys.map(key => {
+        if (key !== CACHE_NAME) return caches.delete(key);
+      })
+    ))
+  );
+  self.clients.claim();
+});
+
+// Стратегия "Stale-while-revalidate" (Сначала кэш, потом сеть)
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(cachedResponse => {
+      const fetchPromise = fetch(event.request).then(networkResponse => {
+        // Кэшируем шрифты Google и новые запросы на лету
+        if (event.request.method === 'GET' && networkResponse.status === 200) {
+          caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse.clone()));
+        }
+        return networkResponse;
+      }).catch(() => {
+        // Если интернета нет, ошибки сети подавляются, показывается кэш
+      });
+      // Моментально возвращаем кэш (если есть), а в фоне обновляем
+      return cachedResponse || fetchPromise;
+    })
+  );
+});
