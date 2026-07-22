@@ -48,12 +48,35 @@
 
 /* ═════════ БАЗОВЫЕ СТИЛИ И СБРОС ═════════ */
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-body { background:var(--bg); color:var(--on-bg); font-family:var(--fb); line-height:1.5; overflow-x:hidden; transition:background .3s,color .3s; }
+body {
+  background:var(--bg);
+  color:var(--on-bg);
+  font-family:var(--fb);
+  line-height:1.5;
+  overflow-x:hidden;
+  padding-top:60px; /* Отступ под фиксированную шапку */
+  -webkit-font-smoothing: antialiased; /* Сглаживание шрифтов, устраняет артефакты текста */
+  transition:background .3s,color .3s;
+}
 ::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-thumb{background:var(--out-var);border-radius:3px}
 
-/* ═════════ ШАПКА ═════════ */
-.top-bar { position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 85%,transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--out-var); }
+/* ═════════ ШАПКА (С ПЛАВНЫМ СКРЫТИЕМ) ═════════ */
+.top-bar {
+  position:fixed; /* Изменено со sticky на fixed для плавности */
+  top:0; left:0; width:100%;
+  z-index:100;
+  background:color-mix(in srgb,var(--bg) 85%,transparent);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px); /* Исправление артефактов блюра в Safari/iOS */
+  border-bottom:1px solid var(--out-var);
+  transform: translateY(0);
+  transition: transform 0.35s cubic-bezier(0.33, 1, 0.68, 1); /* Плавная кривая анимации */
+  will-change: transform;
+}
+.top-bar.hidden {
+  transform: translateY(-100%);
+}
 .top-bar-inner { max-width:700px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; height:60px; }
 .logo { font-family:var(--fd); font-size:18px; font-weight:700; color:var(--p); }
 .theme-btn { width:36px; height:36px; border-radius:var(--r-m); border:none; background:var(--surf-hi); color:var(--on-bg); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:transform .2s,background .2s; }
@@ -66,9 +89,19 @@ body { background:var(--bg); color:var(--on-bg); font-family:var(--fb); line-hei
 
 /* ═════════ КАРТОЧКИ (СВОДКА) ═════════ */
 .route-cards { display:flex; flex-direction:column; gap:16px; }
-.rcard { background:var(--surf-c); border-radius:var(--r-xl); padding:20px; box-shadow:var(--e1); cursor:pointer; transition:transform .2s,box-shadow .2s; }
-.rcard:hover { box-shadow:var(--e2); transform:translateY(-2px); }
-.rcard:active { transform:scale(.98); box-shadow:var(--e1); }
+.rcard {
+  background:var(--surf-c);
+  border-radius:var(--r-xl);
+  padding:20px;
+  box-shadow:var(--e1);
+  cursor:pointer;
+  /* Аппаратное ускорение для устранения мерцаний при скролле */
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  transition:transform .2s,box-shadow .2s;
+}
+.rcard:hover { box-shadow:var(--e2); transform:translateY(-2px) translateZ(0); }
+.rcard:active { transform:scale(.98) translateZ(0); box-shadow:var(--e1); }
 .rc-head { display:flex; justify-content:space-between; font-family:var(--fm); font-size:11px; font-weight:700; color:var(--on-sv); margin-bottom:10px; align-items:center; }
 .rc-badge { padding:4px 8px; border-radius:6px; color:#fff; }
 .rc-badge.p { background:var(--p); color:var(--on-p); }
@@ -79,7 +112,13 @@ body { background:var(--bg); color:var(--on-bg); font-family:var(--fb); line-hei
 .rc-info { background:color-mix(in srgb,var(--on-bg) 4%,transparent); padding:12px; border-radius:var(--r-m); font-size:14px; display:flex; flex-direction:column; gap:6px; }
 
 /* ═════════ ТАЙМЛАЙН (ПОДРОБНЫЙ МАРШРУТ) ═════════ */
-.tl { background:var(--surf-c); border-radius:var(--r-xl); padding:12px 20px; box-shadow:var(--e1); }
+.tl {
+  background:var(--surf-c);
+  border-radius:var(--r-xl);
+  padding:12px 20px;
+  box-shadow:var(--e1);
+  transform: translateZ(0); /* Защита от артефактов на стыке теней */
+}
 .tl-day { font-family:var(--fd); font-size:14px; font-weight:700; background:color-mix(in srgb,var(--p) 15%,transparent); color:var(--p); padding:6px 12px; border-radius:var(--r-m); margin:16px 0 8px; text-align:center; }
 .tl.reverse .tl-day { background:color-mix(in srgb,var(--s) 15%,transparent); color:var(--s); }
 .tl-tz { font-family:var(--fm); font-size:11px; color:var(--on-sv); opacity:.8; text-align:center; margin-bottom:12px; font-style:italic; }
@@ -98,10 +137,10 @@ body { background:var(--bg); color:var(--on-bg); font-family:var(--fb); line-hei
 .tech-badge { font-size:9px; font-family:var(--fm); text-transform:uppercase; padding:2px 6px; background:color-mix(in srgb,currentColor 12%,transparent); border-radius:4px; margin-left:8px; font-weight:700; flex-shrink:0; }
 
 /* ═════════ ПОПАПЫ ═════════ */
-#popup-overlay { position:fixed; inset:0; z-index:600; background:rgba(0,0,0,.5); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .25s; }
+#popup-overlay { position:fixed; inset:0; z-index:600; background:rgba(0,0,0,.5); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .25s; }
 #popup-overlay.open { opacity:1; pointer-events:all; }
-#popup-box { background:var(--surf-c); border-radius:var(--r-xl); padding:24px; max-width:400px; width:100%; box-shadow:var(--e2); transform:scale(.95) translateY(10px); transition:transform .3s cubic-bezier(.34,1.56,.64,1); position:relative; }
-#popup-overlay.open #popup-box { transform:scale(1) translateY(0); }
+#popup-box { background:var(--surf-c); border-radius:var(--r-xl); padding:24px; max-width:400px; width:100%; box-shadow:var(--e2); transform:scale(.95) translateY(10px) translateZ(0); transition:transform .3s cubic-bezier(.34,1.56,.64,1); position:relative; backface-visibility: hidden; }
+#popup-overlay.open #popup-box { transform:scale(1) translateY(0) translateZ(0); }
 .popup-close { position:absolute; top:12px; right:12px; width:32px; height:32px; border-radius:50%; border:none; background:var(--surf-hi); color:var(--on-bg); cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; font-family:var(--fb); }
 .popup-icon { font-size:32px; margin-bottom:12px; display:block; }
 .popup-title { font-family:var(--fd); font-weight:800; font-size:18px; margin-bottom:12px; color:var(--p); line-height:1.2; }
@@ -168,6 +207,25 @@ body { background:var(--bg); color:var(--on-bg); font-family:var(--fb); line-hei
 </div>
 
 <script>
+// ══════════════ СКРЫТИЕ ШАПКИ ПРИ СКРОЛЛЕ ══════════════
+let lastScroll = 0;
+const topBar = document.querySelector('.top-bar');
+
+window.addEventListener('scroll', () => {
+  const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+  // Если скроллим вниз и прошли больше высоты шапки (60px)
+  if (currentScroll > lastScroll && currentScroll > 60) {
+    topBar.classList.add('hidden');
+  } else {
+    // Если скроллим вверх
+    topBar.classList.remove('hidden');
+  }
+
+  // Игнорируем отрицательный скролл (bounce-эффект в Safari)
+  lastScroll = Math.max(0, currentScroll);
+}, { passive: true });
+
 // ══════════════ ТЕМА И ПОПАПЫ ══════════════
 let dark = false;
 function toggleTheme() {
@@ -225,6 +283,11 @@ function closePopup() {
   document.getElementById('popup-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+// Закрывать попап по кнопке ESC
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closePopup();
+});
 
 // ══════════════ РЕНДЕР МАРШРУТОВ ══════════════
 function renderRoute(routeData, containerId) {
