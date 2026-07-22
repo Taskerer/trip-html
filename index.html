@@ -6,1529 +6,219 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ЮГ 2026 🌴</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;700;900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
-/* ══════════════════════════════════════
-   CSS CUSTOM PROPERTIES — MD3 BEIGE
-══════════════════════════════════════ */
+/* ═════════ CSS ПЕРЕМЕННЫЕ И ТЕМЫ ═════════ */
 :root {
   --p:        #7B5800;
   --on-p:     #FFFFFF;
-  --pc:       #FFDDB3;
-  --on-pc:    #271900;
   --s:        #8C4A2F;
   --on-s:     #FFFFFF;
-  --sc:       #FFDBD1;
-  --on-sc:    #3A0B00;
   --t:        #3A6941;
   --on-t:     #FFFFFF;
-  --tc:       #B6F0BD;
-  --on-tc:    #002109;
-  --bg:       #FFF8F3;
+  --bg:       #F9F4F0;
   --on-bg:    #201A13;
-  --surf:     #FFF8F3;
-  --surf-lo:  #FBF2E9;
-  --surf-c:   #F5EBE1;
-  --surf-hi:  #EFE5DA;
-  --surf-var: #F2DFC9;
-  --on-sv:    #51432D;
-  --outline:  #837360;
-  --out-var:  #D5C3AC;
-  --e1: 0 1px 2px rgba(0,0,0,.12),0 1px 3px 1px rgba(0,0,0,.08);
-  --e2: 0 1px 2px rgba(0,0,0,.18),0 2px 6px 2px rgba(0,0,0,.10);
-  --e3: 0 4px 8px 3px rgba(0,0,0,.10),0 1px 3px rgba(0,0,0,.18);
-  --r-s:4px; --r-m:12px; --r-l:16px; --r-xl:24px; --r-full:9999px;
-  --fd:'Unbounded',sans-serif;
-  --fb:'DM Sans',sans-serif;
-  --fm:'JetBrains Mono',monospace;
-  --spring:cubic-bezier(.34,1.56,.64,1);
-  --ease-o:cubic-bezier(.05,.7,.1,1);
+  --surf-c:   #FFFFFF;
+  --surf-hi:  #F5EBE1;
+  --on-sv:    #63543F;
+  --out-var:  #E0D4C5;
+  --e1: 0 4px 12px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03);
+  --e2: 0 8px 24px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
+  --r-m: 8px; --r-l: 12px; --r-xl: 20px;
+  --fd: 'Unbounded', sans-serif;
+  --fb: 'DM Sans', sans-serif;
+  --fm: 'JetBrains Mono', monospace;
 }
 [data-theme="dark"] {
-  --p:#FFB951; --on-p:#412D00; --pc:#5D4200; --on-pc:#FFDDB3;
-  --s:#FFB59C; --on-s:#561F08; --sc:#74331C; --on-sc:#FFDBD1;
-  --t:#9AD49F; --on-t:#003910; --tc:#215129; --on-tc:#B6F0BD;
-  --bg:#18130A; --on-bg:#EDE0D3;
-  --surf:#18130A; --surf-lo:#201A11; --surf-c:#251F15; --surf-hi:#302920;
-  --surf-var:#51432D; --on-sv:#D5C3AC;
-  --outline:#9E8E77; --out-var:#51432D;
-  --e1:0 1px 3px rgba(0,0,0,.45),0 1px 4px 1px rgba(0,0,0,.3);
-  --e2:0 1px 2px rgba(0,0,0,.45),0 2px 6px 2px rgba(0,0,0,.3);
-  --e3:0 4px 8px 3px rgba(0,0,0,.3),0 1px 3px rgba(0,0,0,.4);
+  --p:        #FFB951;
+  --on-p:     #412D00;
+  --s:        #FFB59C;
+  --on-s:     #561F08;
+  --t:        #9AD49F;
+  --on-t:     #003910;
+  --bg:       #14110E;
+  --on-bg:    #EBE1D7;
+  --surf-c:   #1E1914;
+  --surf-hi:  #2C251E;
+  --on-sv:    #C2B29D;
+  --out-var:  #42372C;
+  --e1: 0 4px 12px rgba(0,0,0,0.3);
+  --e2: 0 8px 24px rgba(0,0,0,0.5);
 }
 
-/* ══════════ RESET ══════════ */
+/* ═════════ БАЗОВЫЕ СТИЛИ И СБРОС ═════════ */
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html { scroll-behavior:smooth; }
-body {
-  background:var(--bg);
-  color:var(--on-bg);
-  font-family:var(--fb);
-  line-height:1.5;
-  overflow-x:hidden;
-  transition:background .4s var(--ease-o),color .3s var(--ease-o);
-}
-::-webkit-scrollbar{width:5px}
+body { background:var(--bg); color:var(--on-bg); font-family:var(--fb); line-height:1.5; overflow-x:hidden; transition:background .3s,color .3s; }
+::-webkit-scrollbar{width:6px}
 ::-webkit-scrollbar-thumb{background:var(--out-var);border-radius:3px}
-::selection{background:var(--pc);color:var(--on-pc)}
 
-/* ══════════ STICKY HEADER ══════════ */
-.top-bar {
-  position:sticky; top:0; z-index:200;
-  background:color-mix(in srgb,var(--surf-c) 92%,transparent);
-  backdrop-filter:blur(16px) saturate(1.5);
-  border-bottom:1px solid var(--out-var);
-  transition:background .4s var(--ease-o);
-}
-.top-bar-inner {
-  max-width:1320px; margin:0 auto;
-  padding:0 20px;
-  display:flex; align-items:center; gap:10px;
-  height:60px;
-}
-.logo {
-  font-family:var(--fd); font-size:clamp(12px,2.2vw,17px); font-weight:700;
-  color:var(--p); white-space:nowrap; flex-shrink:0;
-}
+/* ═════════ ШАПКА ═════════ */
+.top-bar { position:sticky; top:0; z-index:100; background:color-mix(in srgb,var(--bg) 85%,transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--out-var); }
+.top-bar-inner { max-width:700px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.logo { font-family:var(--fd); font-size:18px; font-weight:700; color:var(--p); }
+.theme-btn { width:36px; height:36px; border-radius:var(--r-m); border:none; background:var(--surf-hi); color:var(--on-bg); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:transform .2s,background .2s; }
+.theme-btn:active { transform:scale(.9); }
 
-/* Tab bar */
-.tabs {
-  flex:1; min-width:0;
-  display:flex; gap:4px;
-  background:var(--surf-lo);
-  border-radius:var(--r-full);
-  padding:4px;
-}
-.tab {
-  flex:1; min-width:0;
-  padding:7px 14px;
-  border:none; background:transparent; cursor:pointer;
-  font-family:var(--fb); font-size:clamp(11px,1.6vw,13px); font-weight:500;
-  color:var(--on-sv);
-  border-radius:var(--r-full);
-  transition:background .25s var(--ease-o),color .25s var(--ease-o),transform .2s var(--spring);
-  white-space:nowrap;
-  position:relative; overflow:hidden;
-}
-.tab.active {
-  background:var(--surf);
-  color:var(--p);
-  font-weight:700;
-  box-shadow:var(--e1);
-}
-.tab:hover:not(.active){color:var(--p);}
-.tab:active{transform:scale(.96);}
+/* ═════════ КОНТЕЙНЕРЫ И ТЕКСТ ═════════ */
+.mobile-container { max-width:700px; margin:0 auto; padding:20px; }
+.hero-title { font-family:var(--fd); font-size:clamp(22px,6vw,32px); font-weight:900; margin-bottom:20px; letter-spacing:-.02em; }
+.section-title { font-family:var(--fd); font-size:18px; font-weight:700; margin:32px 0 16px; }
 
-/* Ripple effect on tab click */
-.tab::after {
-  content:''; position:absolute; border-radius:50%;
-  width:0; height:0; top:50%; left:50%;
-  background:color-mix(in srgb,var(--p) 18%,transparent);
-  transform:translate(-50%,-50%) scale(0);
-  opacity:0;
-  transition:width .4s var(--ease-o),height .4s var(--ease-o),opacity .4s var(--ease-o);
-}
-.tab:active::after { width:200px; height:200px; opacity:1; transition:none; }
+/* ═════════ КАРТОЧКИ (СВОДКА) ═════════ */
+.route-cards { display:flex; flex-direction:column; gap:16px; }
+.rcard { background:var(--surf-c); border-radius:var(--r-xl); padding:20px; box-shadow:var(--e1); cursor:pointer; transition:transform .2s,box-shadow .2s; }
+.rcard:hover { box-shadow:var(--e2); transform:translateY(-2px); }
+.rcard:active { transform:scale(.98); box-shadow:var(--e1); }
+.rc-head { display:flex; justify-content:space-between; font-family:var(--fm); font-size:11px; font-weight:700; color:var(--on-sv); margin-bottom:10px; align-items:center; }
+.rc-badge { padding:4px 8px; border-radius:6px; color:#fff; }
+.rc-badge.p { background:var(--p); color:var(--on-p); }
+.rc-badge.s { background:var(--s); color:var(--on-s); }
+.rc-badge.t { background:var(--t); color:var(--on-t); }
+.rc-title { font-family:var(--fd); font-size:20px; font-weight:900; margin-bottom:4px; line-height:1.2; }
+.rc-desc { font-size:14px; margin-bottom:14px; color:var(--on-sv); }
+.rc-info { background:color-mix(in srgb,var(--on-bg) 4%,transparent); padding:12px; border-radius:var(--r-m); font-size:14px; display:flex; flex-direction:column; gap:6px; }
 
-/* Theme toggle */
-.theme-btn {
-  width:40px; height:40px; border-radius:var(--r-m);
-  border:none; background:var(--pc); color:var(--on-pc);
-  cursor:pointer; font-size:18px;
-  display:flex; align-items:center; justify-content:center;
-  flex-shrink:0; box-shadow:var(--e1);
-  transition:transform .3s var(--spring),box-shadow .2s var(--ease-o);
-}
-.theme-btn:hover{transform:scale(1.12) rotate(12deg);box-shadow:var(--e3);}
-.theme-btn:active{transform:scale(.9);}
+/* ═════════ ТАЙМЛАЙН (ПОДРОБНЫЙ МАРШРУТ) ═════════ */
+.tl { background:var(--surf-c); border-radius:var(--r-xl); padding:12px 20px; box-shadow:var(--e1); }
+.tl-day { font-family:var(--fd); font-size:14px; font-weight:700; background:color-mix(in srgb,var(--p) 15%,transparent); color:var(--p); padding:6px 12px; border-radius:var(--r-m); margin:16px 0 8px; text-align:center; }
+.tl.reverse .tl-day { background:color-mix(in srgb,var(--s) 15%,transparent); color:var(--s); }
+.tl-tz { font-family:var(--fm); font-size:11px; color:var(--on-sv); opacity:.8; text-align:center; margin-bottom:12px; font-style:italic; }
 
-/* ══════════ PANELS & SECTIONS ══════════ */
-.panel{display:none}
-.panel.active{display:block}
+.tl-row { display:flex; align-items:stretch; }
+.tl-row.tech .tl-station { opacity:.65; font-weight:500; }
+.tl-times { width:45px; padding:12px 0; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; font-family:var(--fm); font-size:13px; font-weight:500; flex-shrink:0; }
+.tl-arr { opacity:.6; font-size:11px; }
+.tl-dep { font-weight:700; }
+.tl-dur { font-size:10px; color:var(--p); font-weight:700; margin:2px 0; }
+.tl.reverse .tl-dur { color:var(--s); }
 
-/* Each section = one visual "screen" */
-.screen {
-  min-height:100svh;
-  padding:clamp(16px,3vw,36px) clamp(16px,4vw,48px);
-  display:flex; flex-direction:column;
-  position:relative; overflow:hidden;
-}
-/* Dashboard screens fill available height */
-.screen.dash {
-  height:100svh;
-  justify-content:space-between;
-}
-/* Z-index layer: decorative behind content */
-.screen>*:not(.bg-blob,.bg-text,.emoji-p){position:relative;z-index:1}
+.tl-station { flex:1; padding:12px 0 12px 16px; border-left:2px solid var(--out-var); margin-left:12px; position:relative; display:flex; align-items:center; font-weight:600; font-size:14.5px; line-height:1.2; }
+.tl-station::before { content:''; position:absolute; left:-6px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--surf-c); border:2px solid var(--p); border-radius:50%; transition:border-color .2s; }
+.tl.reverse .tl-station::before { border-color:var(--s); }
+.tech-badge { font-size:9px; font-family:var(--fm); text-transform:uppercase; padding:2px 6px; background:color-mix(in srgb,currentColor 12%,transparent); border-radius:4px; margin-left:8px; font-weight:700; flex-shrink:0; }
 
-/* ══════════ BACKGROUND DECORATIONS ══════════ */
-.bg-blob {
-  position:absolute; border-radius:50%;
-  filter:blur(90px); opacity:.18;
-  pointer-events:none; z-index:0;
-  will-change:transform;
-  animation:blob 9s ease-in-out infinite;
-}
-@keyframes blob{0%,100%{transform:scale(1) translateY(0)}50%{transform:scale(1.06) translateY(-18px)}}
-
-/* FIX 4: bg-text now actually visible */
-.bg-text {
-  position:absolute; top:50%; left:0;
-  transform:translateY(-50%);
-  white-space:nowrap; pointer-events:none; z-index:0;
-  font-family:var(--fd); font-weight:900;
-  font-size:clamp(70px,11vw,150px);
-  color:transparent;
-  -webkit-text-stroke:2.5px color-mix(in srgb,var(--p) 28%,transparent);
-  text-shadow:0 0 80px color-mix(in srgb,var(--p) 8%,transparent);
-  animation:bgScroll 28s linear infinite;
-}
-[data-theme="dark"] .bg-text {
-  -webkit-text-stroke:2.5px color-mix(in srgb,var(--p) 22%,transparent);
-}
-@keyframes bgScroll{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(-50%)}}
-
-/* FIX 3: Emoji anchored to bottom corners, not floating over content */
-.emoji-p {
-  position:absolute; pointer-events:none; z-index:0;
-  font-size:clamp(22px,3.5vw,38px); opacity:.22;
-  animation:eFloat 7s ease-in-out infinite;
-}
-@keyframes eFloat{0%,100%{transform:translateY(0) rotate(0deg)}40%{transform:translateY(-14px) rotate(6deg)}70%{transform:translateY(7px) rotate(-4deg)}}
-
-/* ══════════ DASHBOARD (Screen 1) ══════════ */
-.hero-row {
-  display:flex; justify-content:space-between; align-items:flex-start;
-  flex-wrap:wrap; gap:12px;
-  margin-bottom:clamp(12px,1.8vw,20px);
-}
-.hero-title {
-  font-family:var(--fd); font-size:clamp(20px,3.5vw,44px);
-  font-weight:900; line-height:1.1; letter-spacing:-.02em;
-  /* Static gradient — no animation to prevent background-clip:text sub-pixel glitch */
-  background:linear-gradient(135deg, var(--p) 0%, var(--s) 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-}
-.hero-sub {
-  font-size:clamp(12px,1.4vw,15px); color:var(--on-sv); margin-top:4px;
-  -webkit-text-fill-color:var(--on-sv);
-}
-.chips { display:flex; gap:6px; flex-wrap:wrap; align-items:center; }
-.chip {
-  display:inline-flex; align-items:center; gap:5px;
-  padding:5px 12px; border-radius:var(--r-full);
-  border:1px solid var(--out-var); background:var(--surf-c);
-  font-size:11px; font-weight:500; color:var(--on-sv);
-  white-space:nowrap; cursor:pointer;
-  transition:background .2s, border-color .2s, transform .2s var(--spring), box-shadow .2s;
-}
-.chip:hover { background:var(--pc); border-color:var(--p); transform:translateY(-1px); box-shadow:var(--e1); }
-.chip:active { transform:scale(.96); }
-
-/* ── Bento grid ── */
-.bento {
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  grid-auto-rows:auto;
-  gap:clamp(8px,1.5vw,14px);
-  flex:1;
-  align-content:start;
-}
-@media(max-width:920px){.bento{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.bento{grid-template-columns:1fr}}
-
-/* FIX 5: Cards with shimmer animation */
-.bcard {
-  background:var(--surf-c);
-  border-radius:var(--r-xl);
-  padding:clamp(14px,2.5vw,22px);
-  box-shadow:var(--e1);
-  display:flex; flex-direction:column; gap:7px;
-  transition:transform .25s var(--spring),box-shadow .2s var(--ease-o),background .35s var(--ease-o);
-  animation:cardIn .5s var(--spring) both;
-  position:relative; overflow:hidden;
-}
-@keyframes cardIn{from{opacity:0;transform:translateY(22px) scale(.96)}to{opacity:1;transform:none}}
-.bcard:nth-child(1){animation-delay:.05s}
-.bcard:nth-child(2){animation-delay:.12s}
-.bcard:nth-child(3){animation-delay:.19s}
-.bcard:nth-child(4){animation-delay:.26s}
-.bcard:nth-child(5){animation-delay:.33s}
-.bcard:hover{transform:translateY(-3px) scale(1.005);box-shadow:var(--e3);}
-.bcard:active{transform:scale(.98);}
-.bcard.p-card{background:var(--pc);color:var(--on-pc)}
-.bcard.s-card{background:var(--sc);color:var(--on-sc)}
-.bcard.t-card{background:var(--tc);color:var(--on-tc)}
-.bcard.wide{grid-column:span 2}
-@media(max-width:920px){.bcard.wide{grid-column:span 2}}
-@media(max-width:520px){.bcard.wide{grid-column:span 1}}
-
-/* Shimmer sweep — transform-based (GPU-accelerated), disabled in dark mode */
-.bcard.p-card::after,.bcard.s-card::after,.bcard.t-card::after {
-  content:''; position:absolute;
-  top:0; left:0; width:50%; height:100%;
-  border-radius:inherit;
-  background:linear-gradient(105deg, transparent 0%, rgba(255,255,255,.17) 50%, transparent 100%);
-  transform:translateX(-200%);
-  will-change:transform;
-  animation:shimmer 6s ease-in-out infinite;
-  pointer-events:none;
-}
-@keyframes shimmer {
-  0%,50%  { transform:translateX(-200%); }
-  80%,100%{ transform:translateX(450%); }
-}
-/* No shimmer / glare in dark mode */
-[data-theme="dark"] .bcard::after { display:none !important; }
-
-.bc-label {
-  font-family:var(--fm); font-size:10px; font-weight:700;
-  text-transform:uppercase; letter-spacing:.08em; opacity:.65;
-}
-.bc-val {
-  font-family:var(--fd); font-size:clamp(20px,2.8vw,36px);
-  font-weight:900; line-height:1.05; letter-spacing:-.02em;
-}
-.bc-sub {font-family:var(--fm); font-size:clamp(10px,1.1vw,12px); opacity:.72;}
-
-/* ── Route card inside bcard ── */
-.rc {display:flex; gap:14px; flex-wrap:wrap; align-items:flex-start}
-.rc-info{flex:1; min-width:150px; display:flex; flex-direction:column; gap:8px}
-.rc-title {
-  font-family:var(--fd); font-size:clamp(14px,2.2vw,22px);
-  font-weight:800; line-height:1.1; letter-spacing:-.01em;
-}
-.arr{display:inline-block;animation:arrBounce 1s ease-in-out infinite alternate}
-@keyframes arrBounce{from{transform:translateX(0)}to{transform:translateX(7px)}}
-
-.tkt-row{display:flex;gap:7px;flex-wrap:wrap}
-
-/* FIX 1: Ticket — no truncation, show full number */
-.tkt {
-  background:color-mix(in srgb,currentColor 8%,transparent);
-  border:1px solid color-mix(in srgb,currentColor 18%,transparent);
-  border-radius:var(--r-l); padding:7px 11px; text-align:center;
-  min-width:56px;
-  cursor:pointer;
-  transition:transform .2s var(--spring), box-shadow .2s var(--ease-o);
-}
-.tkt:hover{transform:scale(1.1) translateY(-3px); box-shadow:var(--e2);}
-.tkt-n{font-family:var(--fd);font-size:clamp(14px,1.8vw,22px);font-weight:800;line-height:1;white-space:nowrap}
-.tkt-t{font-family:var(--fm);font-size:9px;opacity:.65;margin-top:2px;white-space:nowrap}
-
-/* ── Key stops panel ── */
-.ks {
-  flex:1; min-width:130px;
-  background:color-mix(in srgb,var(--surf) 45%,transparent);
-  border-radius:var(--r-l); padding:11px;
-  display:flex; flex-direction:column; gap:0;
-}
-.ks-head{font-family:var(--fm);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.55;margin-bottom:6px}
-.ks-row{
-  display:flex; align-items:center; gap:6px;
-  font-size:12px; padding:4px 0;
-  border-bottom:1px solid color-mix(in srgb,currentColor 8%,transparent);
-}
-.ks-row:last-child{border-bottom:none}
-.ks-n{flex:1;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ks-t{font-family:var(--fm);font-size:11px;flex-shrink:0}
-.ks-d{
-  font-family:var(--fm);font-size:9px;font-weight:700;
-  background:color-mix(in srgb,currentColor 14%,transparent);
-  padding:2px 5px;border-radius:var(--r-full);flex-shrink:0;
-}
-
-/* Stat mini-row */
-.stat-row{display:flex;gap:6px;flex-wrap:nowrap;min-width:0}
-.stat{
-  flex:1;min-width:44px;
-  background:color-mix(in srgb,currentColor 8%,transparent);
-  border-radius:var(--r-m); padding:8px 8px;
-  transition:transform .2s var(--spring);
-}
-.stat:hover{transform:scale(1.06)}
-.stat-n{font-family:var(--fd);font-size:clamp(12px,1.6vw,18px);font-weight:800;line-height:1}
-.stat-l{font-family:var(--fm);font-size:8px;opacity:.65;margin-top:2px}
-
-.scroll-hint{
-  text-align:center;padding:8px 0 4px;
-  font-family:var(--fm);font-size:11px;color:var(--on-sv);
-  animation:pulse 2s ease-in-out infinite;
-}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
-
-/* ══════════ ROUTE SCREEN ══════════ */
-.pg-header {
-  display:flex; align-items:center; gap:12px;
-  flex-wrap:wrap; margin-bottom:clamp(10px,2vw,18px);
-}
-.pg-heading {
-  font-family:var(--fd); font-size:clamp(16px,3vw,36px);
-  font-weight:900; letter-spacing:-.02em;
-}
-.accent{color:var(--p)} .accent-s{color:var(--s)}
-
-/* Train badge — slide-in + subtle opacity pulse (no box-shadow animation with CSS vars) */
-.train-badge {
-  display:inline-flex; align-items:center;
-  background:var(--p); color:var(--on-p);
-  border-radius:var(--r-full); padding:5px 14px;
-  font-family:var(--fd); font-size:12px; font-weight:700;
-  box-shadow:var(--e2); flex-shrink:0;
-  animation:tSlide .5s cubic-bezier(.34,1.56,.64,1) both, badgePulse 3s ease-in-out 1.2s infinite;
-  cursor:pointer;
-  transition:transform .2s cubic-bezier(.34,1.56,.64,1);
-}
-.train-badge:hover { transform:scale(1.06) translateY(-1px); }
-.train-badge.sb { background:var(--s); color:var(--on-s); }
-@keyframes tSlide   { from{transform:translateX(-16px);opacity:0} to{transform:translateX(0);opacity:1} }
-@keyframes badgePulse { 0%,100%{opacity:1} 50%{opacity:.72} }
-
-/* ── Journey progress ── */
-.jp {
-  display:flex; flex-direction:column; gap:0;
-  margin-bottom:clamp(10px,1.5vw,16px);
-  background:var(--surf-c);
-  border-radius:var(--r-xl); padding:14px 18px;
-  box-shadow:var(--e1);
-}
-.jp-title{font-family:var(--fm);font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.55;margin-bottom:10px}
-.jp-steps{display:flex;gap:0;align-items:stretch;overflow-x:auto;padding-bottom:4px}
-.jp-step{flex:1;min-width:80px;display:flex;flex-direction:column;align-items:center;gap:4px}
-.jp-dot{width:10px;height:10px;border-radius:50%;background:var(--p);flex-shrink:0}
-.jp-dot.end{background:var(--t)}
-.jp-dot.sb-dot{background:var(--s)}
-.jp-line-wrap{display:flex;flex:1;width:100%;align-items:center;padding:0 4px}
-.jp-line{flex:1;height:2px;background:var(--out-var);border-radius:1px;overflow:hidden}
-.jp-fill{height:100%;background:var(--p);border-radius:1px;animation:jpFill .9s var(--ease-o) both}
-.jp-fill.sb{background:var(--s)}
-@keyframes jpFill{from{width:0}to{width:100%}}
-.jp-step-inner{display:flex;flex-direction:column;align-items:center;gap:2px}
-.jp-node-row{display:flex;align-items:center;width:100%}
-.jp-node-row .jp-dot{margin:0 auto}
-.jp-lbl{font-family:var(--fm);font-size:9px;color:var(--on-sv);text-align:center;line-height:1.3;max-width:80px}
-.jp-time{font-family:var(--fm);font-size:10px;font-weight:700;color:var(--p);text-align:center}
-.jp-time.sb{color:var(--s)}
-
-/* ── Timetable ── */
-.timetable {
-  flex:none;
-  background:var(--surf-lo);
-  border-radius:var(--r-xl);
-  padding:clamp(12px,2vw,24px);
-  box-shadow:var(--e1);
-  columns:5;
-  column-gap:clamp(12px,2vw,24px);
-  column-rule:1px solid var(--out-var);
-  transition:background .35s var(--ease-o);
-}
-@media(max-width:1200px){.timetable{columns:4}}
-@media(max-width:900px){.timetable{columns:3}}
-@media(max-width:600px){.timetable{columns:2}}
-@media(max-width:400px){.timetable{columns:1;column-rule:none}}
-
-.day-block{break-inside:avoid;margin-bottom:12px}
-
-.day-lbl {
-  display:block; width:100%;
-  padding:4px 10px; border-radius:var(--r-full);
-  font-family:var(--fm); font-size:9px; font-weight:700;
-  text-transform:uppercase; letter-spacing:.06em;
-  margin-bottom:6px;
-  background:var(--on-bg); color:var(--bg);
-  transition:background .35s var(--ease-o),color .35s var(--ease-o);
-}
-.day-lbl.dp{background:var(--p);color:var(--on-p)}
-.day-lbl.ds{background:var(--s);color:var(--on-s)}
-.day-lbl.dtz{background:var(--surf-var);color:var(--on-sv);font-style:italic}
-
-.stop{
-  display:grid;
-  grid-template-columns:1fr auto auto;
-  gap:3px 6px; align-items:center;
-  padding:3px 6px; border-radius:var(--r-m); margin-bottom:1px;
-  transition:background .15s, transform .2s var(--spring);
-}
-.stop:hover{
-  background:color-mix(in srgb,var(--p) 7%,transparent);
-  transform:translateX(3px);
-}
-
-/* Major stop shared base */
-.stop.maj,.stop.maj-s {
-  border-radius:var(--r-l);
-  margin:4px 0; padding:6px 9px;
-  box-shadow:var(--e1);
-}
-.stop.maj{background:var(--pc);color:var(--on-pc)}
-.stop.maj-s{background:var(--sc);color:var(--on-sc)}
-
-/* Finish/start stops */
-.stop.fin,.stop.fin-s {
-  border-radius:var(--r-l);
-  margin:5px 0; padding:7px 9px;
-  box-shadow:var(--e2); font-weight:700;
-}
-.stop.fin{background:var(--p);color:var(--on-p)}
-.stop.fin-s{background:var(--s);color:var(--on-s)}
-
-.sn{font-weight:600;font-size:clamp(10px,1.1vw,12.5px)}
-.sn small{font-weight:400;font-size:9px;opacity:.58}
-.st{font-family:var(--fm);font-weight:700;font-size:clamp(9px,1vw,11px);white-space:nowrap}
-.sd{font-family:var(--fm);font-size:8px;opacity:.58;text-align:right;min-width:26px}
-.stop.maj .sd,.stop.maj-s .sd,.stop.fin .sd,.stop.fin-s .sd{opacity:1;font-weight:700}
-
-/* ══════════ POPUP SYSTEM ══════════ */
-#popup-overlay {
-  position:fixed; inset:0; z-index:600;
-  background:rgba(0,0,0,.48);
-  backdrop-filter:blur(6px) saturate(1.2);
-  display:flex; align-items:center; justify-content:center;
-  padding:20px;
-  opacity:0; pointer-events:none;
-  transition:opacity .28s var(--ease-o);
-}
+/* ═════════ ПОПАПЫ ═════════ */
+#popup-overlay { position:fixed; inset:0; z-index:600; background:rgba(0,0,0,.5); backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .25s; }
 #popup-overlay.open { opacity:1; pointer-events:all; }
-#popup-box {
-  background:var(--surf-c); border-radius:var(--r-xl);
-  padding:28px 28px 24px; max-width:440px; width:100%;
-  box-shadow:var(--e3);
-  transform:scale(.87) translateY(20px);
-  transition:transform .38s var(--spring);
-  position:relative; overflow:hidden;
-}
+#popup-box { background:var(--surf-c); border-radius:var(--r-xl); padding:24px; max-width:400px; width:100%; box-shadow:var(--e2); transform:scale(.95) translateY(10px); transition:transform .3s cubic-bezier(.34,1.56,.64,1); position:relative; }
 #popup-overlay.open #popup-box { transform:scale(1) translateY(0); }
-/* Accent stripe: one-shot grow-in, no looping CSS-var animation */
-#popup-box::before {
-  content:''; position:absolute; top:0; left:0; right:0; height:4px;
-  background:linear-gradient(90deg, var(--p) 0%, var(--s) 50%, var(--t) 100%);
-  border-radius:var(--r-xl) var(--r-xl) 0 0;
-  transform-origin:left center;
-  animation:stripeIn .5s cubic-bezier(.34,1.56,.64,1) both;
-}
-@keyframes stripeIn { from{transform:scaleX(0)} to{transform:scaleX(1)} }
-.popup-close {
-  position:absolute; top:16px; right:16px;
-  width:32px; height:32px; border-radius:50%;
-  border:none; background:var(--surf-hi); cursor:pointer;
-  font-size:14px; color:var(--on-bg);
-  display:flex; align-items:center; justify-content:center;
-  transition:transform .25s var(--spring), background .2s;
-  font-family:var(--fb);
-}
-.popup-close:hover { transform:scale(1.15) rotate(90deg); background:var(--out-var); }
-.popup-icon { font-size:32px; margin-bottom:10px; display:block; animation:popIcon .5s var(--spring) both; }
-@keyframes popIcon{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
-.popup-title {
-  font-family:var(--fd); font-weight:800; font-size:clamp(15px,2vw,18px);
-  margin-bottom:12px; color:var(--p); line-height:1.2;
-}
-.popup-body {
-  font-size:13.5px; line-height:1.7; color:var(--on-bg);
-}
-.popup-body p { margin-bottom:8px; }
-.popup-body p:last-child { margin-bottom:0; }
-.popup-body strong { color:var(--p); font-weight:700; }
-.popup-tags { display:flex; flex-wrap:wrap; gap:5px; margin-top:12px; }
-.ptag {
-  display:inline-flex; align-items:center; gap:4px;
-  background:var(--pc); color:var(--on-pc);
-  border-radius:var(--r-full); padding:3px 10px;
-  font-family:var(--fm); font-size:10px; font-weight:700;
-}
-.ptag.s { background:var(--sc); color:var(--on-sc); }
-.ptag.t { background:var(--tc); color:var(--on-tc); }
-.popup-berth {
-  background:var(--surf-hi); border-radius:var(--r-l); padding:12px 14px;
-  font-family:var(--fm); font-size:11px; line-height:1.8;
-  margin:10px 0;
-}
-.popup-berth .row { display:flex; align-items:center; gap:8px; }
-.popup-berth .highlight { background:var(--pc); padding:1px 6px; border-radius:4px; font-weight:700; }
-
-/* ══════════ ANIMATIONS & UTILS ══════════ */
-@keyframes waveAnim{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(12deg) scale(1.2)}}
-.wave{display:inline-block;animation:waveAnim 1.5s ease-in-out infinite}
-:focus-visible{outline:2px solid var(--p);outline-offset:2px;border-radius:4px}
-
-/* (particles removed — caused visual noise) */
+.popup-close { position:absolute; top:12px; right:12px; width:32px; height:32px; border-radius:50%; border:none; background:var(--surf-hi); color:var(--on-bg); cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; font-family:var(--fb); }
+.popup-icon { font-size:32px; margin-bottom:12px; display:block; }
+.popup-title { font-family:var(--fd); font-weight:800; font-size:18px; margin-bottom:12px; color:var(--p); line-height:1.2; }
+.popup-body { font-size:14px; line-height:1.6; color:var(--on-bg); }
+.popup-body p { margin-bottom:10px; }
+.popup-berth { background:var(--surf-hi); border-radius:var(--r-l); padding:12px; font-family:var(--fm); font-size:12px; line-height:1.8; margin:12px 0; }
 </style>
 </head>
 <body>
 
-<!-- ══ STICKY HEADER ══ -->
 <header class="top-bar">
   <div class="top-bar-inner">
     <div class="logo">🌴 ЮГ 2026</div>
-    <nav class="tabs" role="tablist">
-      <button class="tab active" onclick="switchTab('ufa',this)">🚂 Уфа ↔ Сириус</button>
-      <button class="tab" onclick="switchTab('msk',this)">🏙️ Москва ↔ Сириус</button>
-    </nav>
-    <button class="theme-btn" onclick="toggleTheme()" title="Сменить тему" data-popup="theme-info"><span id="ti">🌙</span></button>
+    <button class="theme-btn" onclick="toggleTheme()" title="Сменить тему"><span id="ti">🌙</span></button>
   </div>
 </header>
 
-<!-- ══════════════════════════════════════
-     PANEL 1 — УФА ↔ СИРИУС
-══════════════════════════════════════ -->
-<div class="panel active" id="panel-ufa">
+<main class="mobile-container">
+  <h1 class="hero-title">Поездка на юг 🌊</h1>
 
-  <!-- ЭКРАН 1: ДАШБОРД -->
-  <section class="screen dash">
-    <div class="bg-blob" style="width:420px;height:420px;background:var(--pc);top:-120px;right:-100px;animation-delay:0s"></div>
-    <div class="bg-blob" style="width:300px;height:300px;background:var(--sc);bottom:-80px;left:-80px;animation-delay:4s"></div>
-    <div class="bg-text" aria-hidden="true">УФА · СИРИУС · 2026 · УФА · СИРИУС · 2026 · </div>
-    <!-- FIX 3: emojis moved to bottom corners -->
-    <span class="emoji-p" style="bottom:8%;right:2%;animation-delay:0s" aria-hidden="true">🐚</span>
-    <span class="emoji-p" style="bottom:4%;right:7%;animation-delay:2.5s" aria-hidden="true">🌴</span>
-    <span class="emoji-p" style="bottom:14%;right:4%;animation-delay:1.2s" aria-hidden="true">☀️</span>
-
-    <div class="hero-row">
-      <div>
-        <div class="hero-title">Поездка на юг <span class="wave" style="-webkit-text-fill-color:initial">✋</span></div>
-        <div class="hero-sub">Поезд 577 туда · Поезд 358 обратно · 3 пассажира</div>
-      </div>
-      <div class="chips">
-        <span class="chip" onclick="openPopup('tickets-ufa')">🎫 3 билета</span>
-        <span class="chip" onclick="openPopup('coupe-info')">🛏️ Купе обратно</span>
-        <span class="chip" onclick="openPopup('wagon-12')">Вагон 12</span>
+  <div class="route-cards">
+    <!-- КАРТОЧКА ТУДА -->
+    <div class="rcard" onclick="openPopup('popup-tuda')">
+      <div class="rc-head"><span class="rc-badge p">🚀 ТУДА</span> <span>28 Июл — 30 Июл</span></div>
+      <div class="rc-title">Уфа ➔ Сириус</div>
+      <div class="rc-desc">Поезд 577 · 2д 5ч 28м в пути</div>
+      <div class="rc-info">
+        <div><strong>Вагон 05</strong> (ПЛ Фирм.) · Места: 001, 002, 014, 030</div>
+        <div style="font-size:12px; opacity:0.7; margin-top:4px;">Нажмите для подробностей</div>
       </div>
     </div>
 
-    <div class="bento">
-      <!-- Туда -->
-      <div class="bcard p-card" onclick="openPopup('train-577-dep')" style="cursor:pointer">
-        <div class="bc-label">🚀 Туда · отправление</div>
-        <div class="bc-val">28 ИЮЛ</div>
-        <div class="bc-sub">ВТОРНИК · 06:58 (UTC+5, МСК+2)</div>
-        <div class="bc-sub" style="margin-top:2px">Поезд 577 · Вагон 05 · ПЛ Фирменный</div>
-      </div>
-      <!-- Отдых -->
-      <div class="bcard t-card" onclick="openPopup('rest-sirius')" style="cursor:pointer">
-        <div class="bc-label">🏖️ Отдых · Олимпийский Парк</div>
-        <div class="bc-val">7 НОЧ</div>
-        <div class="bc-sub">30 ИЮЛЯ — 6 АВГУСТА</div>
-        <div class="bc-sub" style="margin-top:2px">Сириус (Имеретинский курорт)</div>
-      </div>
-      <!-- Обратно -->
-      <div class="bcard s-card" onclick="openPopup('train-358-arr')" style="cursor:pointer">
-        <div class="bc-label">🏠 Обратно · прибытие</div>
-        <div class="bc-val">08 АВГ</div>
-        <div class="bc-sub">СУББОТА · 15:30 (UTC+5, МСК+2)</div>
-        <div class="bc-sub" style="margin-top:2px">Поезд 358 · Вагон 12 · Купе</div>
-      </div>
-
-      <!-- Маршрут ТУДА -->
-      <div class="bcard p-card wide">
-        <div class="bc-label">🛤️ Маршрут туда · 2 сут 3 ч 28 мин</div>
-        <div class="rc">
-          <div class="rc-info">
-            <div class="rc-title">УФА <span class="arr">→</span> СИРИУС</div>
-            <div class="stat-row">
-              <div class="stat"><div class="stat-n">577</div><div class="stat-l">Поезд</div></div>
-              <div class="stat"><div class="stat-n">05</div><div class="stat-l">Вагон ПЛ</div></div>
-              <div class="stat"><div class="stat-n">28→30</div><div class="stat-l">Июля</div></div>
-            </div>
-            <div class="tkt-row">
-              <div class="tkt" onclick="openPopup('seat-001-pl');event.stopPropagation()"><div class="tkt-n">001</div><div class="tkt-t">Нижнее</div></div>
-              <div class="tkt" onclick="openPopup('seat-002-pl');event.stopPropagation()"><div class="tkt-n">002</div><div class="tkt-t">Верхнее</div></div>
-              <div class="tkt" onclick="openPopup('seat-014-side');event.stopPropagation()"><div class="tkt-n">014</div><div class="tkt-t">Верхнее</div></div>
-            </div>
-          </div>
-          <div class="ks">
-            <div class="ks-head">⏱ Крупные остановки</div>
-            <div class="ks-row"><span class="ks-n">Самара</span><span class="ks-t">14:52</span><span class="ks-d">31м</span></div>
-            <div class="ks-row"><span class="ks-n">Саратов-1</span><span class="ks-t">00:51</span><span class="ks-d">46м</span></div>
-            <div class="ks-row"><span class="ks-n">Волгоград-1</span><span class="ks-t">07:48</span><span class="ks-d">42м</span></div>
-            <div class="ks-row"><span class="ks-n">Ростов-Гл.</span><span class="ks-t">19:57</span><span class="ks-d">40м</span></div>
-            <div class="ks-row"><span class="ks-n">Сочи</span><span class="ks-t">09:21</span><span class="ks-d">11м</span></div>
-            <div class="ks-row"><span class="ks-n">🏁 Сириус</span><span class="ks-t">10:26</span><span class="ks-d">30.07</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Маршрут ОБРАТНО -->
-      <div class="bcard s-card">
-        <div class="bc-label">🛤️ Маршрут обратно · 2 сут 0 ч 11 мин</div>
-        <div class="rc">
-          <div class="rc-info">
-            <div class="rc-title">СИРИУС <span class="arr">→</span> УФА</div>
-            <div class="stat-row">
-              <div class="stat"><div class="stat-n">358</div><div class="stat-l">Поезд</div></div>
-              <div class="stat"><div class="stat-n">12</div><div class="stat-l">Вагон Купе</div></div>
-              <div class="stat"><div class="stat-n">6→8</div><div class="stat-l">Августа</div></div>
-            </div>
-            <div class="tkt-row">
-              <div class="tkt" onclick="openPopup('seat-017-coupe');event.stopPropagation()"><div class="tkt-n">017</div><div class="tkt-t">Нижнее</div></div>
-              <div class="tkt" onclick="openPopup('seat-018-coupe');event.stopPropagation()"><div class="tkt-n">018</div><div class="tkt-t">Верхнее</div></div>
-              <div class="tkt" onclick="openPopup('seat-019-coupe');event.stopPropagation()"><div class="tkt-n">019</div><div class="tkt-t">Нижнее</div></div>
-            </div>
-          </div>
-          <div class="ks">
-            <div class="ks-head">⏱ Крупные остановки</div>
-            <div class="ks-row"><span class="ks-n">Горячий Ключ</span><span class="ks-t">18:48</span><span class="ks-d">34м</span></div>
-            <div class="ks-row"><span class="ks-n">Краснодар-1</span><span class="ks-t">20:26</span><span class="ks-d">5м</span></div>
-            <div class="ks-row"><span class="ks-n">Волгоград-1</span><span class="ks-t">09:51</span><span class="ks-d">36м</span></div>
-            <div class="ks-row"><span class="ks-n">Саратов-1</span><span class="ks-t">19:34</span><span class="ks-d">40м</span></div>
-            <div class="ks-row"><span class="ks-n">Самара</span><span class="ks-t">05:26</span><span class="ks-d">58м</span></div>
-            <div class="ks-row"><span class="ks-n">🏠 Уфа</span><span class="ks-t">15:30</span><span class="ks-d">08.08</span></div>
-          </div>
-        </div>
-      </div>
-    </div><!-- /bento -->
-
-    <div class="scroll-hint">↓ Прокрутите для полного расписания маршрутов ↓</div>
-  </section>
-
-  <!-- ЭКРАН 2: МАРШРУТ ТУДА (УФА → СИРИУС) -->
-  <section class="screen">
-    <div class="bg-blob" style="width:360px;height:360px;background:var(--pc);top:-70px;left:-90px;animation-delay:1s;opacity:.15"></div>
-
-    <div class="pg-header">
-      <div class="train-badge" onclick="openPopup('train-577')">🚂 577 Фирменный</div>
-      <div class="pg-heading"><span class="accent">ТУДА</span> · УФА → СИРИУС</div>
-      <span class="chip" onclick="openPopup('wagon-05')">28–30 Июля · 2сут 3ч · Вагон 05 · Место 001/002/014</span>
+    <!-- КАРТОЧКА ОТДЫХА -->
+    <div class="rcard" onclick="openPopup('popup-hotel')">
+      <div class="rc-head"><span class="rc-badge t">🏖️ ОТДЫХ</span> <span>30 Июл — 6 Авг</span></div>
+      <div class="rc-title" style="margin-bottom:0">Сириус</div>
+      <div class="rc-desc" style="margin-bottom:0; margin-top:4px">Олимпийский парк · 7 ночей</div>
     </div>
 
-    <div class="jp">
-      <div class="jp-title">🗺️ Ключевые точки маршрута</div>
-      <div class="jp-steps">
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Уфа</div>
-          <div class="jp-time">06:58</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.1s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Самара</div>
-          <div class="jp-time">14:52</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.3s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Волгоград</div>
-          <div class="jp-time">07:48</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.5s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Ростов-Гл.</div>
-          <div class="jp-time">19:57</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.7s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Сочи</div>
-          <div class="jp-time">09:21</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.9s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot end"></div></div>
-          <div class="jp-lbl">🏁 Сириус</div>
-          <div class="jp-time" style="color:var(--t)">10:26</div>
-        </div>
+    <!-- КАРТОЧКА ОБРАТНО -->
+    <div class="rcard" onclick="openPopup('popup-obratno')">
+      <div class="rc-head"><span class="rc-badge s">🏠 ОБРАТНО</span> <span>6 Авг — 8 Авг</span></div>
+      <div class="rc-title">Сириус ➔ Уфа</div>
+      <div class="rc-desc">Поезд 358 · 2д 0ч 11м в пути</div>
+      <div class="rc-info">
+        <div><strong>Вагон 12</strong> (Купе) · Места: 017, 018, 019</div>
+        <div style="font-size:12px; opacity:0.7; margin-top:4px;">Нажмите для подробностей</div>
       </div>
     </div>
+  </div>
 
-    <div class="timetable">
-      <div class="day-block">
-        <div class="day-lbl dp">🏠 28 Июля · Уфа (UTC+5, МСК+2)</div>
-        <div class="stop fin"><span class="sn">🚀 УФА</span><span class="st">06:58</span><span class="sd">СТАРТ</span></div>
-        <div class="stop"><span class="sn">Чишмы-Вост.<small> *тех</small></span><span class="st">07:50</span><span class="sd">30м</span></div>
-        <div class="stop"><span class="sn">Раевка</span><span class="st">09:30</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Аксаково</span><span class="st">10:54</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Приютово</span><span class="st">11:17</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Абдулино</span><span class="st">11:55</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Бугуруслан</span><span class="st">13:15</span><span class="sd">2м</span></div>
-      </div>
+  <h2 class="section-title">Подробный маршрут туда</h2>
+  <div id="tl-tuda" class="tl"></div>
 
-      <div class="day-block">
-        <div class="day-lbl dtz">↓ МСК+1 (Самара)</div>
-        <div class="stop"><span class="sn">Похвистнево</span><span class="st">12:35</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Новоотрадная</span><span class="st">13:24</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Кинель</span><span class="st">14:12</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Самара</span><span class="st">14:52</span><span class="sd">31м</span></div>
-        <div class="stop"><span class="sn">Чапаевск</span><span class="st">16:03</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Звезда<small> *тех</small></span><span class="st">16:17</span><span class="sd">18м</span></div>
-        <div class="stop"><span class="sn">Пугачёвск</span><span class="st">19:02</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Балаково</span><span class="st">20:25</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Вольск-2</span><span class="st">21:28</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Сенная</span><span class="st">22:07</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Сухой Карабулак<small> *тех</small></span><span class="st">22:57</span><span class="sd">11м</span></div>
-      </div>
+  <h2 class="section-title">Подробный маршрут обратно</h2>
+  <div id="tl-obratno" class="tl reverse"></div>
+</main>
 
-      <div class="day-block">
-        <div class="day-lbl">🌙 29 Июля · Ночь (МСК+1)</div>
-        <div class="stop maj"><span class="sn">⭐ Саратов-1</span><span class="st">00:51</span><span class="sd">46м</span></div>
-        <div class="stop"><span class="sn">Багаевка<small> *тех</small></span><span class="st">02:20</span><span class="sd">12м</span></div>
-        <div class="stop"><span class="sn">Карамыш</span><span class="st">03:45</span><span class="sd">2м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl dtz">↓ МСК (Москва)</div>
-        <div class="stop"><span class="sn">Петров Вал</span><span class="st">04:23</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Волгоград-1</span><span class="st">07:48</span><span class="sd">42м</span></div>
-        <div class="stop"><span class="sn">Суровикино</span><span class="st">10:45</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Обливская</span><span class="st">11:13</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Морозовская</span><span class="st">12:12</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Тацинская</span><span class="st">13:15</span><span class="sd">1м</span></div>
-        <div class="stop"><span class="sn">Белая Калитва</span><span class="st">14:12</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Лихая<small> *тех</small></span><span class="st">15:36</span><span class="sd">27м</span></div>
-        <div class="stop"><span class="sn">Сулин</span><span class="st">16:56</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Шахтная</span><span class="st">17:44</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Каменоломни<small> *тех</small></span><span class="st">17:58</span><span class="sd">30м</span></div>
-        <div class="stop"><span class="sn">Новочеркасск</span><span class="st">19:00</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Ростов-Главный</span><span class="st">19:57</span><span class="sd">40м</span></div>
-        <div class="stop"><span class="sn">Тихорецкая</span><span class="st">23:31</span><span class="sd">2м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl dp">🌴 30 Июля · К морю!</div>
-        <div class="stop"><span class="sn">Кавказская</span><span class="st">00:29</span><span class="sd">32м</span></div>
-        <div class="stop"><span class="sn">Армавир-2</span><span class="st">02:02</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Курганная</span><span class="st">02:36</span><span class="sd">3м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Белореченская</span><span class="st">03:39</span><span class="sd">35м</span></div>
-        <div class="stop"><span class="sn">Хадыженская</span><span class="st">05:23</span><span class="sd">4м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Туапсе-Пасс.</span><span class="st">06:59</span><span class="sd">4м</span></div>
-        <div class="stop"><span class="sn">Шепси<small> *тех</small></span><span class="st">07:18</span><span class="sd">7м</span></div>
-        <div class="stop"><span class="sn">Лазаревская</span><span class="st">07:51</span><span class="sd">7м</span></div>
-        <div class="stop"><span class="sn">Лоо</span><span class="st">08:40</span><span class="sd">12м</span></div>
-        <div class="stop"><span class="sn">Дагомыс<small> *тех</small></span><span class="st">09:03</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Сочи</span><span class="st">09:21</span><span class="sd">11м</span></div>
-        <div class="stop"><span class="sn">Хоста</span><span class="st">09:51</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Адлер</span><span class="st">10:05</span><span class="sd">7м</span></div>
-        <div class="stop fin"><span class="sn">🏁 СИРИУС</span><span class="st">10:26</span><span class="sd">ФИНИШ</span></div>
-      </div>
-    </div><!-- /timetable -->
-  </section>
-
-  <!-- ЭКРАН 3: МАРШРУТ ОБРАТНО (СИРИУС → УФА) -->
-  <section class="screen">
-    <div class="bg-blob" style="width:360px;height:360px;background:var(--sc);top:-70px;right:-90px;animation-delay:2s;opacity:.15"></div>
-
-    <div class="pg-header">
-      <div class="train-badge sb" onclick="openPopup('train-358')">🚂 358 Купе</div>
-      <div class="pg-heading"><span class="accent-s">ОБРАТНО</span> · СИРИУС → УФА</div>
-      <span class="chip" onclick="openPopup('wagon-12')">6–8 Августа · 2сут 0ч 11м · Вагон 12 · Купе 017/018/019</span>
-    </div>
-
-    <div class="jp">
-      <div class="jp-title">🗺️ Ключевые точки маршрута</div>
-      <div class="jp-steps">
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Сириус</div>
-          <div class="jp-time sb">13:19</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.1s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Краснодар</div>
-          <div class="jp-time sb">20:26</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.3s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Волгоград</div>
-          <div class="jp-time sb">09:51</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.5s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Саратов-1</div>
-          <div class="jp-time sb">19:34</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.7s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Самара</div>
-          <div class="jp-time sb">05:26</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.9s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot" style="background:var(--p)"></div></div>
-          <div class="jp-lbl">🏠 Уфа</div>
-          <div class="jp-time">15:30</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="timetable">
-      <div class="day-block">
-        <div class="day-lbl ds">🌴 6 Августа · Выезд (МСК)</div>
-        <div class="stop fin-s"><span class="sn">🚀 СИРИУС</span><span class="st">13:19</span><span class="sd">СТАРТ</span></div>
-        <div class="stop"><span class="sn">Адлер</span><span class="st">13:35</span><span class="sd">12м</span></div>
-        <div class="stop"><span class="sn">Хоста</span><span class="st">13:57</span><span class="sd">2м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Сочи</span><span class="st">14:12</span><span class="sd">14м</span></div>
-        <div class="stop"><span class="sn">Дагомыс<small> *тех</small></span><span class="st">14:42</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Лоо</span><span class="st">14:54</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Лазаревская</span><span class="st">15:35</span><span class="sd">4м</span></div>
-        <div class="stop"><span class="sn">Шепси<small> *тех</small></span><span class="st">16:01</span><span class="sd">4м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Туапсе-Пасс.</span><span class="st">16:35</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Кривенковская<small> *тех</small></span><span class="st">17:18</span><span class="sd">4м</span></div>
-        <div class="stop"><span class="sn">Афапостик<small> *тех</small></span><span class="st">18:00</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Фанагорийская<small> *тех</small></span><span class="st">18:21</span><span class="sd">6м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Горячий Ключ</span><span class="st">18:48</span><span class="sd">34м</span></div>
-        <div class="stop"><span class="sn">Саратовская<small> *тех</small></span><span class="st">19:34</span><span class="sd">8м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Краснодар-1</span><span class="st">20:26</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Динская</span><span class="st">20:59</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Пластуновская<small> *тех</small></span><span class="st">21:13</span><span class="sd">12м</span></div>
-        <div class="stop"><span class="sn">Кореновск</span><span class="st">21:50</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Выселки</span><span class="st">22:25</span><span class="sd">10м</span></div>
-        <div class="stop"><span class="sn">Тихорецкая</span><span class="st">23:49</span><span class="sd">18м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl ds">☀️ 7 Августа · В пути</div>
-        <div class="stop"><span class="sn">Ровное</span><span class="st">01:03</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Белоглинская</span><span class="st">01:37</span><span class="sd">3м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Сальск</span><span class="st">03:00</span><span class="sd">18м</span></div>
-        <div class="stop"><span class="sn">Пролетарская</span><span class="st">03:56</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Куберле</span><span class="st">04:56</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Зимовники</span><span class="st">05:29</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Ремонтная</span><span class="st">06:05</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Котельниково</span><span class="st">06:47</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Жутово</span><span class="st">07:39</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Сарепта</span><span class="st">09:11</span><span class="sd">2м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Волгоград-1</span><span class="st">09:51</span><span class="sd">36м</span></div>
-        <div class="stop"><span class="sn">Петров Вал</span><span class="st">14:21</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Овражная<small> *тех</small></span><span class="st">15:20</span><span class="sd">10м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl dtz">↑ МСК+1 (Самара)</div>
-        <div class="stop"><span class="sn">Карамыш<small> *тех</small></span><span class="st">17:22</span><span class="sd">30м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Саратов-1</span><span class="st">19:34</span><span class="sd">40м</span></div>
-        <div class="stop"><span class="sn">Сенная</span><span class="st">22:42</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Кулатка</span><span class="st">23:54</span><span class="sd">2м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl">🏠 8 Августа · Домой!</div>
-        <div class="stop"><span class="sn">Возрождение</span><span class="st">00:20</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Сызрань-Гор.</span><span class="st">01:40</span><span class="sd">7м</span></div>
-        <div class="stop"><span class="sn">Сызрань-Южн.<small> *тех</small></span><span class="st">01:57</span><span class="sd">45м</span></div>
-        <div class="stop"><span class="sn">Звезда<small> *тех</small></span><span class="st">04:13</span><span class="sd">19м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Самара</span><span class="st">05:26</span><span class="sd">58м</span></div>
-        <div class="stop"><span class="sn">Новоотрадная</span><span class="st">07:40</span><span class="sd">2м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl dtz">↑ МСК+2 (Уфа)</div>
-        <div class="stop"><span class="sn">Бугуруслан</span><span class="st">09:47</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Абдулино</span><span class="st">11:05</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Приютово</span><span class="st">11:40</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Аксаково</span><span class="st">12:02</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Раевка</span><span class="st">13:12</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Чишмы-1</span><span class="st">14:16</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Чишмы-Вост.<small> *тех</small></span><span class="st">14:23</span><span class="sd">10м</span></div>
-        <div class="stop fin"><span class="sn">🏠 УФА</span><span class="st">15:30</span><span class="sd">ДОМА!</span></div>
-      </div>
-    </div>
-  </section>
-
-</div><!-- /panel-ufa -->
-
-<!-- ══════════════════════════════════════
-     PANEL 2 — МОСКВА ↔ СИРИУС
-══════════════════════════════════════ -->
-<div class="panel" id="panel-msk">
-
-  <!-- ЭКРАН 1: ДАШБОРД -->
-  <section class="screen dash">
-    <div class="bg-blob" style="width:400px;height:400px;background:var(--pc);top:-100px;right:-100px;animation-delay:0s"></div>
-    <div class="bg-blob" style="width:280px;height:280px;background:var(--sc);bottom:-60px;left:-60px;animation-delay:3.5s"></div>
-    <div class="bg-text" aria-hidden="true">МОСКВА · СИРИУС · 2026 · МОСКВА · СИРИУС · 2026 · </div>
-    <!-- FIX 3: emojis anchored to bottom corners -->
-    <span class="emoji-p" style="bottom:10%;right:3%;animation-delay:1s" aria-hidden="true">🐚</span>
-    <span class="emoji-p" style="bottom:5%;right:7%;animation-delay:3s" aria-hidden="true">🏛️</span>
-
-    <div class="hero-row">
-      <div>
-        <div class="hero-title">Москва ↔ Сириус <span class="wave" style="-webkit-text-fill-color:initial">🏙️</span></div>
-        <div class="hero-sub">Поезд 038 Фирменный · Плацкарт · Вагон 09</div>
-      </div>
-      <div class="chips">
-        <span class="chip" onclick="openPopup('tickets-msk')">🎫 2 билета</span>
-        <span class="chip" onclick="openPopup('pl-info')">🛏️ ПЛ Фирменный</span>
-        <span class="chip" onclick="openPopup('wagon-09')">Вагон 09</span>
-      </div>
-    </div>
-
-    <div class="bento">
-      <div class="bcard p-card" onclick="openPopup('train-038-dep')" style="cursor:pointer">
-        <div class="bc-label">🚀 Туда · отправление</div>
-        <div class="bc-val">29 ИЮЛ</div>
-        <div class="bc-sub">СРЕДА · 01:48 (МСК, UTC+3)</div>
-        <div class="bc-sub" style="margin-top:2px">Поезд 038 · Вагон 09 · Место 024</div>
-      </div>
-      <div class="bcard t-card" onclick="openPopup('rest-sirius')" style="cursor:pointer">
-        <div class="bc-label">🏖️ Отдых · Олимпийский Парк</div>
-        <div class="bc-val">7 НОЧ</div>
-        <div class="bc-sub">30 ИЮЛЯ — 6 АВГУСТА</div>
-        <div class="bc-sub" style="margin-top:2px">Сириус (Имеретинский курорт)</div>
-      </div>
-      <div class="bcard s-card" onclick="openPopup('train-038-arr')" style="cursor:pointer">
-        <div class="bc-label">🏠 Обратно · прибытие</div>
-        <div class="bc-val">07 АВГ</div>
-        <div class="bc-sub">ПЯТНИЦА · 23:35 (МСК, UTC+3)</div>
-        <div class="bc-sub" style="margin-top:2px">Поезд 038 · Вагон 09 · Место 014</div>
-      </div>
-
-      <!-- Маршрут ТУДА -->
-      <div class="bcard p-card wide">
-        <div class="bc-label">🛤️ Маршрут туда · 1 сут 8 ч 10 мин</div>
-        <div class="rc">
-          <div class="rc-info">
-            <div class="rc-title">МОСКВА <span class="arr">→</span> СИРИУС</div>
-            <div class="stat-row">
-              <div class="stat"><div class="stat-n">038</div><div class="stat-l">Поезд</div></div>
-              <div class="stat"><div class="stat-n">09</div><div class="stat-l">Вагон ПЛ</div></div>
-              <div class="stat"><div class="stat-n">29→30</div><div class="stat-l">Июля</div></div>
-            </div>
-            <div class="tkt-row">
-              <div class="tkt" onclick="openPopup('seat-024-pl');event.stopPropagation()"><div class="tkt-n">024</div><div class="tkt-t">Верхнее</div></div>
-            </div>
-          </div>
-          <div class="ks">
-            <div class="ks-head">⏱ Крупные остановки</div>
-            <div class="ks-row"><span class="ks-n">Рязань-2</span><span class="ks-t">04:15</span><span class="ks-d">5м</span></div>
-            <div class="ks-row"><span class="ks-n">Мичуринск-Ур.</span><span class="ks-t">06:50</span><span class="ks-d">41м</span></div>
-            <div class="ks-row"><span class="ks-n">Россошь</span><span class="ks-t">14:08</span><span class="ks-d">35м</span></div>
-            <div class="ks-row"><span class="ks-n">Ростов-Гл.</span><span class="ks-t">22:19</span><span class="ks-d">22м</span></div>
-            <div class="ks-row"><span class="ks-n">Краснодар-1</span><span class="ks-t">02:43</span><span class="ks-d">17м</span></div>
-            <div class="ks-row"><span class="ks-n">Горячий Ключ</span><span class="ks-t">04:06</span><span class="ks-d">40м</span></div>
-            <div class="ks-row"><span class="ks-n">Сочи</span><span class="ks-t">08:45</span><span class="ks-d">16м</span></div>
-            <div class="ks-row"><span class="ks-n">🏁 Сириус</span><span class="ks-t">09:58</span><span class="ks-d">30.07</span></div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Маршрут ОБРАТНО -->
-      <div class="bcard s-card">
-        <div class="bc-label">🛤️ Маршрут обратно · 1 сут 8 ч 41 мин</div>
-        <div class="rc">
-          <div class="rc-info">
-            <div class="rc-title">СИРИУС <span class="arr">→</span> МОСКВА</div>
-            <div class="stat-row">
-              <div class="stat"><div class="stat-n">038</div><div class="stat-l">Поезд</div></div>
-              <div class="stat"><div class="stat-n">09</div><div class="stat-l">Вагон ПЛ</div></div>
-              <div class="stat"><div class="stat-n">6→7</div><div class="stat-l">Августа</div></div>
-            </div>
-            <div class="tkt-row">
-              <div class="tkt" onclick="openPopup('seat-014-pl-msk');event.stopPropagation()"><div class="tkt-n">014</div><div class="tkt-t">Верхнее</div></div>
-            </div>
-          </div>
-          <div class="ks">
-            <div class="ks-head">⏱ Крупные остановки</div>
-            <div class="ks-row"><span class="ks-n">Сочи</span><span class="ks-t">15:49</span><span class="ks-d">15м</span></div>
-            <div class="ks-row"><span class="ks-n">Горячий Ключ</span><span class="ks-t">20:54</span><span class="ks-d">36м</span></div>
-            <div class="ks-row"><span class="ks-n">Краснодар-1</span><span class="ks-t">23:11</span><span class="ks-d">7м</span></div>
-            <div class="ks-row"><span class="ks-n">Ростов-Гл.</span><span class="ks-t">03:57</span><span class="ks-d">20м</span></div>
-            <div class="ks-row"><span class="ks-n">Россошь</span><span class="ks-t">11:31</span><span class="ks-d">15м</span></div>
-            <div class="ks-row"><span class="ks-n">Рязань-2</span><span class="ks-t">20:16</span><span class="ks-d">5м</span></div>
-            <div class="ks-row"><span class="ks-n">🏠 Москва</span><span class="ks-t">23:35</span><span class="ks-d">07.08</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="scroll-hint">↓ Прокрутите для полного расписания маршрутов ↓</div>
-  </section>
-
-  <!-- ЭКРАН 2: МАРШРУТ ТУДА (МОСКВА → СИРИУС) -->
-  <section class="screen">
-    <div class="bg-blob" style="width:350px;height:350px;background:var(--pc);bottom:-70px;right:-80px;animation-delay:.5s;opacity:.15"></div>
-
-    <div class="pg-header">
-      <div class="train-badge" onclick="openPopup('train-038')">🚂 038 Фирменный ПЛ</div>
-      <div class="pg-heading"><span class="accent">ТУДА</span> · МОСКВА → СИРИУС</div>
-      <span class="chip" onclick="openPopup('wagon-09')">29–30 Июля · 1сут 8ч 10м · Вагон 09 · Место 024</span>
-    </div>
-
-    <div class="jp">
-      <div class="jp-title">🗺️ Ключевые точки маршрута</div>
-      <div class="jp-steps">
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Москва Каз.</div>
-          <div class="jp-time">01:48</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.1s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Мичуринск</div>
-          <div class="jp-time">06:50</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.3s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Ростов-Гл.</div>
-          <div class="jp-time">22:19</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.5s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Краснодар</div>
-          <div class="jp-time">02:43</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.7s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot"></div></div>
-          <div class="jp-lbl">Сочи</div>
-          <div class="jp-time">08:45</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill" style="animation-delay:.9s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot end"></div></div>
-          <div class="jp-lbl">🏁 Сириус</div>
-          <div class="jp-time" style="color:var(--t)">09:58</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="timetable">
-      <div class="day-block">
-        <div class="day-lbl dp">🏙️ 29 Июля · Москва (МСК)</div>
-        <div class="stop fin"><span class="sn">🚀 МОСКВА (Казанский)</span><span class="st">01:48</span><span class="sd">СТАРТ</span></div>
-        <div class="stop maj"><span class="sn">⭐ Рязань-2</span><span class="st">04:15</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Богоявленск</span><span class="st">06:08</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Мичуринск-Ур.</span><span class="st">06:50</span><span class="sd">41м</span></div>
-        <div class="stop"><span class="sn">Грязи-Воронежские</span><span class="st">08:31</span><span class="sd">3м</span></div>
-        <div class="stop"><span class="sn">Отрожка<small> *тех</small></span><span class="st">10:06</span><span class="sd">14м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Воронеж (Придача)</span><span class="st">10:35</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Лиски<small> *тех</small></span><span class="st">11:50</span><span class="sd">6м</span></div>
-        <div class="stop"><span class="sn">Евдаково<small> *тех</small></span><span class="st">12:35</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Россошь</span><span class="st">14:08</span><span class="sd">35м</span></div>
-        <div class="stop"><span class="sn">Миллерово</span><span class="st">17:18</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Каменская</span><span class="st">18:16</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Шахтная</span><span class="st">20:21</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Новочеркасск</span><span class="st">21:16</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Ростов-Главный</span><span class="st">22:19</span><span class="sd">22м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl dp">🌴 30 Июля · К морю!</div>
-        <div class="stop"><span class="sn">Старомин.-Тимаш.</span><span class="st">00:08</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Краснодар-1</span><span class="st">02:43</span><span class="sd">17м</span></div>
-        <div class="stop"><span class="sn">Энем-2<small> *тех</small></span><span class="st">03:08</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Саратовская<small> *тех</small></span><span class="st">03:31</span><span class="sd">4м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Горячий Ключ</span><span class="st">04:06</span><span class="sd">40м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Туапсе-Пасс.</span><span class="st">06:23</span><span class="sd">7м</span></div>
-        <div class="stop"><span class="sn">Водопадный<small> *тех</small></span><span class="st">06:59</span><span class="sd">10м</span></div>
-        <div class="stop"><span class="sn">Лазаревская</span><span class="st">07:21</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Якорная Щель<small> *тех</small></span><span class="st">07:56</span><span class="sd">8м</span></div>
-        <div class="stop"><span class="sn">Лоо</span><span class="st">08:19</span><span class="sd">3м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Сочи</span><span class="st">08:45</span><span class="sd">16м</span></div>
-        <div class="stop"><span class="sn">Хоста</span><span class="st">09:20</span><span class="sd">2м</span></div>
-        <div class="stop maj"><span class="sn">⭐ Адлер</span><span class="st">09:33</span><span class="sd">11м</span></div>
-        <div class="stop fin"><span class="sn">🏁 СИРИУС</span><span class="st">09:58</span><span class="sd">ФИНИШ</span></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ЭКРАН 3: МАРШРУТ ОБРАТНО (СИРИУС → МОСКВА) -->
-  <section class="screen">
-    <div class="bg-blob" style="width:350px;height:350px;background:var(--sc);top:-70px;left:-80px;animation-delay:2s;opacity:.15"></div>
-
-    <div class="pg-header">
-      <div class="train-badge sb" onclick="openPopup('train-038')">🚂 038 Фирменный ПЛ</div>
-      <div class="pg-heading"><span class="accent-s">ОБРАТНО</span> · СИРИУС → МОСКВА</div>
-      <span class="chip" onclick="openPopup('wagon-09')">6–7 Августа · 1сут 8ч 41м · Вагон 09 · Место 014</span>
-    </div>
-
-    <div class="jp">
-      <div class="jp-title">🗺️ Ключевые точки маршрута</div>
-      <div class="jp-steps">
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Сириус</div>
-          <div class="jp-time sb">14:54</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.1s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Краснодар</div>
-          <div class="jp-time sb">23:11</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.3s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Ростов-Гл.</div>
-          <div class="jp-time sb">03:57</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.5s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Россошь</div>
-          <div class="jp-time sb">11:31</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.7s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot sb-dot"></div></div>
-          <div class="jp-lbl">Рязань-2</div>
-          <div class="jp-time sb">20:16</div>
-        </div>
-        <div style="flex:1;display:flex;align-items:flex-start;padding-top:4px">
-          <div class="jp-line"><div class="jp-fill sb" style="animation-delay:.9s"></div></div>
-        </div>
-        <div class="jp-step">
-          <div class="jp-node-row"><div class="jp-dot" style="background:var(--p)"></div></div>
-          <div class="jp-lbl">🏠 Москва</div>
-          <div class="jp-time">23:35</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="timetable">
-      <div class="day-block">
-        <div class="day-lbl ds">🌴 6 Августа · Выезд (МСК)</div>
-        <div class="stop fin-s"><span class="sn">🚀 СИРИУС</span><span class="st">14:54</span><span class="sd">СТАРТ</span></div>
-        <div class="stop"><span class="sn">Адлер</span><span class="st">15:07</span><span class="sd">8м</span></div>
-        <div class="stop"><span class="sn">Хоста</span><span class="st">15:27</span><span class="sd">2м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Сочи</span><span class="st">15:49</span><span class="sd">15м</span></div>
-        <div class="stop"><span class="sn">Дагомыс<small> *тех</small></span><span class="st">16:22</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Лоо</span><span class="st">16:37</span><span class="sd">4м</span></div>
-        <div class="stop"><span class="sn">Лазаревская</span><span class="st">17:21</span><span class="sd">4м</span></div>
-        <div class="stop"><span class="sn">Шепси<small> *тех</small></span><span class="st">17:51</span><span class="sd">5м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Туапсе-Пасс.</span><span class="st">18:12</span><span class="sd">12м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Горячий Ключ</span><span class="st">20:54</span><span class="sd">36м</span></div>
-        <div class="stop"><span class="sn">Саратовская<small> *тех</small></span><span class="st">21:43</span><span class="sd">36м</span></div>
-        <div class="stop"><span class="sn">Энем-2<small> *тех</small></span><span class="st">22:48</span><span class="sd">5м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Краснодар-1</span><span class="st">23:11</span><span class="sd">7м</span></div>
-      </div>
-
-      <div class="day-block">
-        <div class="day-lbl ds">☀️ 7 Августа · В пути</div>
-        <div class="stop"><span class="sn">Брюховецкая</span><span class="st">00:41</span><span class="sd">23м</span></div>
-        <div class="stop"><span class="sn">Каневская</span><span class="st">01:31</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Албаши<small> *тех</small></span><span class="st">01:59</span><span class="sd">14м</span></div>
-        <div class="stop"><span class="sn">Старомин.-Тимаш.</span><span class="st">02:32</span><span class="sd">2м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Ростов-Главный</span><span class="st">03:57</span><span class="sd">20м</span></div>
-        <div class="stop"><span class="sn">Новочеркасск</span><span class="st">05:17</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Шахтная</span><span class="st">06:03</span><span class="sd">2м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Сулин<small> *тех</small></span><span class="st">06:32</span><span class="sd">30м</span></div>
-        <div class="stop"><span class="sn">Каменская</span><span class="st">08:10</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Миллерово</span><span class="st">09:02</span><span class="sd">2м</span></div>
-        <div class="stop"><span class="sn">Зайцевка</span><span class="st">10:26</span><span class="sd">2м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Россошь</span><span class="st">11:31</span><span class="sd">15м</span></div>
-        <div class="stop"><span class="sn">Лиски</span><span class="st">13:15</span><span class="sd">5м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Придача (Вор.-Южный)</span><span class="st">14:24</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Отрожка<small> *тех</small></span><span class="st">14:46</span><span class="sd">12м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Грязи-Воронежские</span><span class="st">16:18</span><span class="sd">12м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Мичуринск-Ур.</span><span class="st">17:19</span><span class="sd">37м</span></div>
-        <div class="stop"><span class="sn">Богоявленск</span><span class="st">18:31</span><span class="sd">2м</span></div>
-        <div class="stop maj-s"><span class="sn">⭐ Рязань-2</span><span class="st">20:16</span><span class="sd">5м</span></div>
-        <div class="stop"><span class="sn">Дивово<small> *тех</small></span><span class="st">20:54</span><span class="sd">13м</span></div>
-        <div class="stop fin"><span class="sn">🏠 МОСКВА (Казанский)</span><span class="st">23:35</span><span class="sd">ФИНИШ</span></div>
-      </div>
-    </div>
-  </section>
-
-</div><!-- /panel-msk -->
-
-<!-- ══════════════════════════════════════
-     POPUP OVERLAY
-══════════════════════════════════════ -->
 <div id="popup-overlay" onclick="closePopup()">
   <div id="popup-box" onclick="event.stopPropagation()">
-    <button class="popup-close" onclick="closePopup()" aria-label="Закрыть">✕</button>
+    <button class="popup-close" onclick="closePopup()">✕</button>
     <div id="popup-content"></div>
   </div>
 </div>
 
 <script>
-/* ── Tab switching ── */
-function switchTab(name, el) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('panel-' + name).classList.add('active');
-  el.classList.add('active');
-  window.scrollTo({top: 0, behavior: 'instant'});
-}
-
-/* ── Theme ── */
+// ══════════════ ТЕМА И ПОПАПЫ ══════════════
 let dark = false;
 function toggleTheme() {
   dark = !dark;
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   document.getElementById('ti').textContent = dark ? '☀️' : '🌙';
-  const btn = document.querySelector('.theme-btn');
-  btn.style.transform = 'scale(1.25) rotate(18deg)';
-  setTimeout(() => { btn.style.transform = ''; }, 300);
 }
 
-/* ── Popup data ── */
 const POPUPS = {
-  'train-577': {
-    icon:'🚂',
-    title:'Поезд 577 «Южный Урал»',
-    body:`<p>Фирменный поезд <strong>577 Уфа → Адлер</strong>. Категория: плацкарт (ПЛ), фирменный — улучшенный сервис, чистое бельё в комплекте, кондиционер.</p>
-          <p>Отправление <strong>28 июля, 06:58</strong> (МСК+2, Уфа). Прибытие <strong>30 июля, 10:26</strong>.</p>
-          <p>⏱ Время в пути: <strong>2 суток 3 ч 28 мин</strong></p>`,
-    tags:[{l:'577',cls:''},{l:'ПЛ Фирм.',cls:''},{l:'Вагон 05',cls:''}]
+  'popup-tuda': {
+    icon: '🚀', title: 'Уфа → Сириус',
+    body: `<p><strong>Поезд:</strong> 577 (Плацкарт Фирменный)<br>
+           <strong>Отправление:</strong> 28 июля, 06:58 (Уфа)<br>
+           <strong>Прибытие:</strong> 30 июля, 10:26 (Сириус)</p>
+           <div class="popup-berth">
+             <strong>Вагон 05 — 4 билета</strong><br>
+             Место 001 — Нижнее (Купе 1)<br>
+             Место 002 — Верхнее (Купе 1)<br>
+             Место 014 — Верхнее (Купе 4)<br>
+             Место 030 — Верхнее (Купе 8)
+           </div>
+           <p>✅ Билеты куплены. В фирменном вагоне работает кондиционер, биотуалет, предоставляется постельное белье.</p>`
   },
-  'train-358': {
-    icon:'🚂',
-    title:'Поезд 358 Адлер — Уфа',
-    body:`<p>Поезд <strong>358 Адлер → Уфа</strong>. Категория: купе (КУП).</p>
-          <p>Отправление <strong>6 августа, 13:19</strong> (МСК). Прибытие <strong>8 августа, 15:30</strong> (МСК+2, Уфа).</p>
-          <p>⏱ Время в пути: <strong>2 суток 0 ч 11 мин</strong></p>
-          <p>🏆 Купе — приватный отсек на 4 места с закрывающейся дверью. У вас <strong>3 из 4 мест</strong> в купе 5 — почти весь отсек ваш!</p>`,
-    tags:[{l:'358',cls:''},{l:'Купе',cls:'s'},{l:'Вагон 12',cls:'s'}]
+  'popup-obratno': {
+    icon: '🏠', title: 'Сириус → Уфа',
+    body: `<p><strong>Поезд:</strong> 358 (Купе)<br>
+           <strong>Отправление:</strong> 6 августа, 13:19 (Сириус)<br>
+           <strong>Прибытие:</strong> 8 августа, 15:30 (Уфа)</p>
+           <div class="popup-berth">
+             <strong>Вагон 12 — 3 билета</strong><br>
+             Место 017 — Нижнее<br>
+             Место 018 — Верхнее<br>
+             Место 019 — Нижнее
+           </div>
+           <p>✅ Все билеты в одном купе (Купе 5). Дверь закрывается изнутри, удобно и приватно. 3 из 4 мест ваши!</p>`
   },
-  'train-038': {
-    icon:'🚂',
-    title:'Поезд 038 «Москва — Адлер»',
-    body:`<p>Фирменный поезд <strong>038 Москва ↔ Сириус</strong>. Категория: плацкарт фирменный (ПЛ).</p>
-          <p><strong>Туда:</strong> 29 июля, 01:48 МСК → 30 июля, 09:58. Место <strong>024</strong> (верхнее).</p>
-          <p><strong>Обратно:</strong> 6 августа, 14:54 → 7 августа, 23:35. Место <strong>014</strong> (верхнее).</p>
-          <p>Один поезд — обе поездки. Проверьте номер вагона при посадке!</p>`,
-    tags:[{l:'038',cls:''},{l:'ПЛ Фирм.',cls:''},{l:'Вагон 09',cls:''}]
-  },
-  'train-577-dep': {
-    icon:'🚀',
-    title:'Отправление 28 июля',
-    body:`<p>Поезд <strong>577</strong>, <strong>Уфа → Сириус</strong>.</p>
-          <p>📍 Вокзал Уфы · Платформа уточняется за час до отправления.</p>
-          <p>🕐 06:58 по <strong>местному времени (UTC+5)</strong> — это МСК+2. Не перепутайте: билет всегда в <strong>московском времени</strong> (04:58 МСК).</p>
-          <p>✅ Рекомендуем быть на платформе за 15–20 минут.</p>`,
-    tags:[{l:'28 Июля',cls:''},{l:'06:58 МСК+2',cls:''}]
-  },
-  'train-358-arr': {
-    icon:'🏠',
-    title:'Прибытие 8 августа',
-    body:`<p>Поезд <strong>358</strong>, прибытие в <strong>Уфу</strong>.</p>
-          <p>🕐 15:30 по местному времени (UTC+5). На билете время московское — <strong>13:30 МСК</strong>.</p>
-          <p>Итого поездка туда-обратно: <strong>10 дней</strong>, из них 7 ночей отдыха и ~4 суток в поезде.</p>`,
-    tags:[{l:'8 Августа',cls:'s'},{l:'15:30 МСК+2',cls:'s'}]
-  },
-  'train-038-dep': {
-    icon:'🚀',
-    title:'Отправление 29 июля',
-    body:`<p>Поезд <strong>038</strong>, Казанский вокзал Москвы.</p>
-          <p>🕐 Отправление <strong>01:48 МСК</strong> — это ночь с 28 на 29 июля. Удобно добраться заранее и переночевать в дороге.</p>
-          <p>⏱ Прибытие в Сириус: <strong>30 июля, 09:58</strong>. Успеете заселиться и сразу на пляж!</p>`,
-    tags:[{l:'29 Июля',cls:''},{l:'01:48 МСК',cls:''}]
-  },
-  'train-038-arr': {
-    icon:'🏠',
-    title:'Прибытие 7 августа',
-    body:`<p>Поезд <strong>038</strong>, прибытие на <strong>Казанский вокзал Москвы</strong>.</p>
-          <p>🕐 23:35 МСК. Все метро ещё работает — успеете добраться домой!</p>`,
-    tags:[{l:'7 Августа',cls:'s'},{l:'23:35 МСК',cls:'s'}]
-  },
-  'seat-001-pl': {
-    icon:'🛏️',
-    title:'Место 001 — Нижнее купе',
-    body:`<p>В плацкартном вагоне места <strong>001–036</strong> — основные купе (по 8 полок), места <strong>037–054</strong> — боковые.</p>
-          <div class="popup-berth">
-            <div class="row">001 <span class="highlight">◼ Нижняя</span> ← ВЫ ЗДЕСЬ</div>
-            <div class="row">002 ◻ Верхняя</div>
-            <div class="row" style="margin-top:4px">003 ◼ Нижняя</div>
-            <div class="row">004 ◻ Верхняя</div>
-          </div>
-          <p>Нижняя полка удобнее: можно сидеть днём, ставить сумку под полку. Есть небольшой столик у окна.</p>`,
-    tags:[{l:'Вагон 05',cls:''},{l:'Нижняя',cls:'t'}]
-  },
-  'seat-002-pl': {
-    icon:'🛏️',
-    title:'Место 002 — Верхнее купе',
-    body:`<p>Верхняя полка в том же купе, что и место 001.</p>
-          <div class="popup-berth">
-            <div class="row">001 ◼ Нижняя</div>
-            <div class="row">002 <span class="highlight">◻ Верхняя</span> ← ВЫ ЗДЕСЬ</div>
-          </div>
-          <p>Верхняя — тише и прохладнее летом. Меньше соседей проходит мимо, но нужна лесенка. На верхней есть индивидуальный светильник.</p>`,
-    tags:[{l:'Вагон 05',cls:''},{l:'Верхняя',cls:''}]
-  },
-  'seat-014-side': {
-    icon:'🛏️',
-    title:'Место 014 — Боковое верхнее',
-    body:`<p>Место 014 в плацкарте попадает в <strong>купейную зону</strong> (секция 4, верхняя полка). Уточните по распечатке билета — в некоторых вагонах нумерация купе и боковых отличается.</p>
-          <div class="popup-berth">
-            <div class="row">013 ◼ Нижняя</div>
-            <div class="row">014 <span class="highlight">◻ Верхняя</span> ← ВЫ ЗДЕСЬ</div>
-          </div>
-          <p>⚠️ Место 014 может быть не рядом с 001 и 002 — это разные секции одного вагона. Договоритесь с соседями при необходимости.</p>`,
-    tags:[{l:'Вагон 05',cls:''},{l:'Верхняя',cls:''}]
-  },
-  'seat-017-coupe': {
-    icon:'🛏️',
-    title:'Место 017 — Купе, нижнее',
-    body:`<p>Купейный вагон 12, купе 5. В купе <strong>4 места</strong>: 017, 018, 019, 020. У вас взяты <strong>3 из 4</strong> — фактически весь отсек!</p>
-          <div class="popup-berth">
-            <div class="row">017 <span class="highlight">◼ Нижняя</span> ← ВЫ ЗДЕСЬ</div>
-            <div class="row">018 ◻ Верхняя (ваша)</div>
-            <div class="row">019 ◼ Нижняя (ваша)</div>
-            <div class="row" style="opacity:.5">020 ◻ Верхняя (чужое)</div>
-          </div>`,
-    tags:[{l:'Вагон 12',cls:'s'},{l:'Купе 5',cls:'s'},{l:'Нижняя',cls:'t'}]
-  },
-  'seat-018-coupe': {
-    icon:'🛏️',
-    title:'Место 018 — Купе, верхнее',
-    body:`<p>Купейный вагон 12, купе 5. Верхняя полка напротив нижней 017.</p>
-          <div class="popup-berth">
-            <div class="row">017 ◼ Нижняя (ваша)</div>
-            <div class="row">018 <span class="highlight">◻ Верхняя</span> ← ВЫ ЗДЕСЬ</div>
-            <div class="row">019 ◼ Нижняя (ваша)</div>
-            <div class="row" style="opacity:.5">020 ◻ Верхняя (чужое)</div>
-          </div>`,
-    tags:[{l:'Вагон 12',cls:'s'},{l:'Купе 5',cls:'s'},{l:'Верхняя',cls:''}]
-  },
-  'seat-019-coupe': {
-    icon:'🛏️',
-    title:'Место 019 — Купе, нижнее',
-    body:`<p>Нижняя полка в купе 5, напротив мест 017/018. Вместе у вас 3 места — отлично для 3 пассажиров!</p>
-          <div class="popup-berth">
-            <div class="row">017 ◼ Нижняя (ваша)</div>
-            <div class="row">018 ◻ Верхняя (ваша)</div>
-            <div class="row">019 <span class="highlight">◼ Нижняя</span> ← ВЫ ЗДЕСЬ</div>
-            <div class="row" style="opacity:.5">020 ◻ Верхняя (чужое)</div>
-          </div>`,
-    tags:[{l:'Вагон 12',cls:'s'},{l:'Купе 5',cls:'s'},{l:'Нижняя',cls:'t'}]
-  },
-  'seat-024-pl': {
-    icon:'🛏️',
-    title:'Место 024 — Верхнее купе',
-    body:`<p>Плацкарт вагон 09 поезда 038. Секция 6, верхняя полка.</p>
-          <div class="popup-berth">
-            <div class="row">023 ◼ Нижняя</div>
-            <div class="row">024 <span class="highlight">◻ Верхняя</span> ← ВЫ ЗДЕСЬ</div>
-          </div>
-          <p>Ночной выезд из Москвы — сразу спать! Прибытие утром следующего дня в Сириус 🌴</p>`,
-    tags:[{l:'Вагон 09',cls:''},{l:'Верхняя',cls:''}]
-  },
-  'seat-014-pl-msk': {
-    icon:'🛏️',
-    title:'Место 014 — Верхнее купе',
-    body:`<p>Плацкарт вагон 09 поезда 038 (обратно). Секция 4, верхняя полка.</p>
-          <div class="popup-berth">
-            <div class="row">013 ◼ Нижняя</div>
-            <div class="row">014 <span class="highlight">◻ Верхняя</span> ← ВЫ ЗДЕСЬ</div>
-          </div>
-          <p>Обратная дорога: выезжаете вечером из Сириуса, прибываете в Москву следующим вечером. Полтора дня пути!</p>`,
-    tags:[{l:'Вагон 09',cls:'s'},{l:'Верхняя',cls:''}]
-  },
-  'wagon-05': {
-    icon:'🚃',
-    title:'Вагон 05 — Плацкарт',
-    body:`<p>Плацкартный вагон 05 поезда 577. Стандартный ПЛ-вагон: <strong>54 места</strong>.</p>
-          <p>📐 Схема: 8 купе по 4 полки (001–032) + 4 секции боковых (033–054). Ваши места в купейной зоне.</p>
-          <p>🌡️ Фирменный поезд = кондиционер + биотуалет. Полотенца и чай включены.</p>`,
-    tags:[{l:'54 места',cls:''},{l:'ПЛ Фирм.',cls:''},{l:'Поезд 577',cls:''}]
-  },
-  'wagon-12': {
-    icon:'🚃',
-    title:'Вагон 12 — Купе',
-    body:`<p>Купейный вагон 12 поезда 358. <strong>36 мест</strong> в 9 купе.</p>
-          <p>🚪 Купе закрывается на замок изнутри. У каждого пассажира — полка, матрас, подушка, бельё.</p>
-          <p>📍 Ваше купе 5 (места 017–020). Вы занимаете 3 из 4 мест — посторонний сосед возможен на месте 020 (верхнее).</p>`,
-    tags:[{l:'36 мест',cls:'s'},{l:'Купе',cls:'s'},{l:'Поезд 358',cls:'s'}]
-  },
-  'wagon-09': {
-    icon:'🚃',
-    title:'Вагон 09 — Плацкарт',
-    body:`<p>Плацкартный вагон 09 поезда 038. <strong>54 места</strong>, кондиционер, фирменный сервис.</p>
-          <p>📍 Туда: место <strong>024</strong> (верхнее, секция 6).<br>Обратно: место <strong>014</strong> (верхнее, секция 4).</p>
-          <p>Посадка по паспорту и билету. Проверьте номер вагона на информационном табло перрона.</p>`,
-    tags:[{l:'54 места',cls:''},{l:'ПЛ Фирм.',cls:''},{l:'Поезд 038',cls:''}]
-  },
-  'tickets-ufa': {
-    icon:'🎫',
-    title:'3 билета Уфа ↔ Сириус',
-    body:`<p>Три пассажира, два поезда:</p>
-          <p><strong>Туда (577):</strong> Вагон 05 — места 001 (нижнее), 002 (верхнее), 014 (верхнее). Все в одном вагоне ✅</p>
-          <p><strong>Обратно (358):</strong> Вагон 12, купе 5 — места 017, 018, 019. Три полки в одном купе ✅</p>`,
-    tags:[{l:'3 пасс.',cls:''},{l:'Вагон 05',cls:''},{l:'Вагон 12',cls:'s'}]
-  },
-  'tickets-msk': {
-    icon:'🎫',
-    title:'2 билета Москва ↔ Сириус',
-    body:`<p>Два пассажира, один поезд в обе стороны:</p>
-          <p><strong>Туда (038):</strong> Вагон 09 — место 024 (верхнее). Ночной выезд 29 июля.</p>
-          <p><strong>Обратно (038):</strong> Вагон 09 — место 014 (верхнее). Выезд 6 августа вечером.</p>`,
-    tags:[{l:'2 пасс.',cls:''},{l:'Вагон 09',cls:''},{l:'Поезд 038',cls:''}]
-  },
-  'coupe-info': {
-    icon:'🚪',
-    title:'Купе — что это?',
-    body:`<p>Купейный вагон — это <strong>закрытые отсеки на 4 человека</strong> с дверью. Значительно приватнее плацкарта.</p>
-          <p>В вашем купе (места 017–019) вы трое занимаете нижние и одну верхнюю полку. Четвёртое место (020, верхнее) может быть занято посторонним.</p>
-          <p>✅ Можно закрыть дверь, удобнее для хранения вещей.</p>`,
-    tags:[{l:'Купе',cls:'s'},{l:'Вагон 12',cls:'s'}]
-  },
-  'pl-info': {
-    icon:'🛏️',
-    title:'ПЛ Фирменный — что это?',
-    body:`<p><strong>Плацкарт фирменный</strong> — открытый вагон с 54 полками. Менее приватен, чем купе, зато обычно дешевле.</p>
-          <p>«Фирменный» означает: кондиционер, биотуалет (экотуалет), комплект белья (матрас + подушка + одеяло), возможно — чай/кофе включён.</p>
-          <p>Поезд 038 — фирменный поезд РЖД с улучшенным обслуживанием.</p>`,
-    tags:[{l:'ПЛ Фирм.',cls:''},{l:'038 → Сириус',cls:''}]
-  },
-  'rest-sirius': {
-    icon:'🏖️',
-    title:'Сириус · Имеретинский курорт',
-    body:`<p><strong>Сириус</strong> — федеральная территория рядом с Адлером, образованная на базе Олимпийского парка Сочи-2014.</p>
-          <p>Отдых <strong>30 июля — 6 августа</strong> (7 ночей). Рядом — Олимпийский парк с аттракционами, пляжи Имеретинской бухты, Роза Хутор в горах (40 мин).</p>
-          <p>☀️ Август на побережье: +28–32°C, море +26°C. Самый пляжный сезон!</p>`,
-    tags:[{l:'7 ночей',cls:'t'},{l:'Адлер',cls:'t'},{l:'Олимп. Парк',cls:'t'}]
+  'popup-hotel': {
+    icon: '🏖️', title: 'Отдых в Сириусе',
+    body: `<p><strong>Даты:</strong> 30 июля — 6 августа (7 ночей)<br>
+           <strong>Локация:</strong> ПГТ Сириус (Олимпийский парк)</p>
+           <p>Отличное время для моря! Август — самый теплый месяц, вода прогревается до +26...28°C.</p>`
   }
 };
 
 function openPopup(id) {
   const data = POPUPS[id];
   if (!data) return;
-  const tags = (data.tags||[]).map(t =>
-    `<span class="ptag ${t.cls||''}">${t.l}</span>`
-  ).join('');
   document.getElementById('popup-content').innerHTML = `
     <span class="popup-icon">${data.icon}</span>
     <div class="popup-title">${data.title}</div>
     <div class="popup-body">${data.body}</div>
-    ${tags ? `<div class="popup-tags">${tags}</div>` : ''}
   `;
   document.getElementById('popup-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -1539,29 +229,159 @@ function closePopup() {
   document.body.style.overflow = '';
 }
 
-document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') closePopup();
-});
+// ══════════════ РЕНДЕР МАРШРУТОВ ══════════════
+function renderRoute(routeData, containerId) {
+    const container = document.getElementById(containerId);
+    let html = '';
+    routeData.forEach(item => {
+        if (item.day) {
+            html += `<div class="tl-day">${item.day}</div>`;
+        } else if (item.tz) {
+            html += `<div class="tl-tz">${item.tz}</div>`;
+        } else if (item.s) {
+            const isTech = item.tech ? ' tech' : '';
+            const techLabel = item.tech ? `<span class="tech-badge">Тех</span>` : '';
 
-/* ── Intersection observer — only for stop rows, NOT bcards (bcards use CSS cardIn) ── */
-const io = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.querySelectorAll('.stop.maj,.stop.maj-s,.stop.fin,.stop.fin-s').forEach((el, i) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(6px)';
-        setTimeout(() => {
-          el.style.transition = 'opacity .3s ease, transform .35s cubic-bezier(.34,1.56,.64,1)';
-          el.style.opacity = '1';
-          el.style.transform = 'none';
-        }, i * 30);
-      });
-      io.unobserve(entry.target);
-    }
-  });
-}, {threshold: 0.06});
+            let timeHtml = '';
+            if (item.a === '-' && item.d !== '-') {
+                timeHtml = `<div class="tl-dep" style="font-size:14px">${item.d}</div>`;
+            } else if (item.a !== '-' && item.d === '-') {
+                timeHtml = `<div class="tl-arr" style="font-size:14px; opacity:1; color:currentColor; font-weight:700">${item.a}</div>`;
+            } else {
+                timeHtml = `
+                    <div class="tl-arr">${item.a}</div>
+                    <div class="tl-dur">${item.dur}</div>
+                    <div class="tl-dep">${item.d}</div>
+                `;
+            }
 
-document.querySelectorAll('.screen').forEach(s => io.observe(s));
+            html += `
+            <div class="tl-row${isTech}">
+                <div class="tl-times">${timeHtml}</div>
+                <div class="tl-station">${item.s} ${techLabel}</div>
+            </div>`;
+        }
+    });
+    container.innerHTML = html;
+}
+
+const route577 = [
+  { day: "28 Июля", tz: "МСК+2 (Время местное)" },
+  { s: "Уфа", a: "06:21", d: "06:58", dur: "37 мин" },
+  { s: "Чишмы-восточные", a: "07:50", d: "08:20", dur: "30 мин", tech: true },
+  { s: "Раевка", a: "09:30", d: "09:32", dur: "2 мин" },
+  { s: "Аксаково", a: "10:54", d: "10:56", dur: "2 мин" },
+  { s: "Приютово", a: "11:17", d: "11:19", dur: "2 мин" },
+  { s: "Абдулино", a: "11:55", d: "11:57", dur: "2 мин" },
+  { s: "Бугуруслан", a: "13:15", d: "13:17", dur: "2 мин" },
+  { tz: "МСК+1 (Самара)" },
+  { s: "Похвистнево", a: "12:35", d: "12:37", dur: "2 мин" },
+  { s: "Новоотрадная", a: "13:24", d: "13:26", dur: "2 мин" },
+  { s: "Кинель", a: "14:12", d: "14:14", dur: "2 мин" },
+  { s: "Самара", a: "14:52", d: "15:23", dur: "31 мин" },
+  { s: "Чапаевск", a: "16:03", d: "16:05", dur: "2 мин" },
+  { s: "Звезда", a: "16:17", d: "16:35", dur: "18 мин", tech: true },
+  { s: "Пугачёвск", a: "19:02", d: "19:05", dur: "3 мин" },
+  { s: "Балаково", a: "20:25", d: "20:28", dur: "3 мин" },
+  { s: "Вольск-2", a: "21:28", d: "21:31", dur: "3 мин" },
+  { s: "Сенная", a: "22:07", d: "22:12", dur: "5 мин" },
+  { s: "Сухой Карабулак", a: "22:57", d: "23:08", dur: "11 мин", tech: true },
+  { day: "29 Июля" },
+  { s: "Саратов-1-Пасс.", a: "00:51", d: "01:37", dur: "46 мин" },
+  { s: "Багаевка", a: "02:20", d: "02:32", dur: "12 мин", tech: true },
+  { s: "Карамыш", a: "03:45", d: "03:47", dur: "2 мин" },
+  { tz: "Московское время (МСК)" },
+  { s: "Петров Вал", a: "04:23", d: "04:25", dur: "2 мин" },
+  { s: "Волгоград-1", a: "07:48", d: "08:30", dur: "42 мин" },
+  { s: "Суровикино", a: "10:45", d: "10:47", dur: "2 мин" },
+  { s: "Обливская", a: "11:13", d: "11:15", dur: "2 мин" },
+  { s: "Морозовская", a: "12:12", d: "12:14", dur: "2 мин" },
+  { s: "Тацинская", a: "13:15", d: "13:16", dur: "1 мин" },
+  { s: "Белая Калитва", a: "14:12", d: "14:14", dur: "2 мин" },
+  { s: "Лихая", a: "15:36", d: "16:03", dur: "27 мин" },
+  { s: "Сулин", a: "16:56", d: "16:58", dur: "2 мин" },
+  { s: "Шахтная", a: "17:44", d: "17:46", dur: "2 мин" },
+  { s: "Каменоломни", a: "17:58", d: "18:28", dur: "30 мин", tech: true },
+  { s: "Новочеркасск", a: "19:00", d: "19:02", dur: "2 мин" },
+  { s: "Ростов-Главный", a: "19:57", d: "20:37", dur: "40 мин" },
+  { s: "Тихорецкая", a: "23:31", d: "23:33", dur: "2 мин" },
+  { day: "30 Июля" },
+  { s: "Кавказская", a: "00:29", d: "01:01", dur: "32 мин" },
+  { s: "Армавир-2-Туапсинский", a: "02:02", d: "02:04", dur: "2 мин" },
+  { s: "Курганная", a: "02:36", d: "02:39", dur: "3 мин" },
+  { s: "Белореченская", a: "03:39", d: "04:14", dur: "35 мин" },
+  { s: "Хадыженская", a: "05:23", d: "05:27", dur: "4 мин" },
+  { s: "Туапсе-Пасс.", a: "06:59", d: "07:03", dur: "4 мин" },
+  { s: "Шепси", a: "07:18", d: "07:25", dur: "7 мин", tech: true },
+  { s: "Лазаревская", a: "07:51", d: "07:58", dur: "7 мин" },
+  { s: "Лоо", a: "08:40", d: "08:52", dur: "12 мин" },
+  { s: "Дагомыс", a: "09:03", d: "09:05", dur: "2 мин", tech: true },
+  { s: "Сочи", a: "09:21", d: "09:32", dur: "11 мин" },
+  { s: "Хоста", a: "09:51", d: "09:53", dur: "2 мин" },
+  { s: "Адлер", a: "10:05", d: "10:12", dur: "7 мин" },
+  { s: "Сириус (Олимпийский Парк)", a: "10:26", d: "-", dur: "-" }
+];
+
+const route358 = [
+  { day: "6 Августа", tz: "Московское время (МСК)" },
+  { s: "Сириус (Олимпийский Парк)", a: "-", d: "13:19", dur: "-" },
+  { s: "Адлер", a: "13:32", d: "13:40", dur: "8 мин" },
+  { s: "Хоста", a: "13:52", d: "13:54", dur: "2 мин" },
+  { s: "Сочи", a: "14:14", d: "14:30", dur: "16 мин" },
+  { s: "Лоо", a: "14:55", d: "14:58", dur: "3 мин" },
+  { s: "Лазаревская", a: "15:38", d: "15:51", dur: "13 мин" },
+  { s: "1898 км", a: "16:11", d: "16:14", dur: "3 мин", tech: true },
+  { s: "Туапсе-Пасс.", a: "16:36", d: "16:50", dur: "14 мин" },
+  { s: "Кривенковская", a: "17:18", d: "17:22", dur: "4 мин", tech: true },
+  { s: "Афапостик", a: "18:00", d: "18:03", dur: "3 мин", tech: true },
+  { s: "Фанагорийская", a: "18:21", d: "18:27", dur: "6 мин", tech: true },
+  { s: "Горячий Ключ", a: "18:48", d: "19:22", dur: "34 мин" },
+  { s: "Саратовская", a: "19:34", d: "19:42", dur: "8 мин", tech: true },
+  { s: "Краснодар-1", a: "20:26", d: "20:31", dur: "5 мин" },
+  { s: "Динская", a: "20:59", d: "21:01", dur: "2 мин" },
+  { s: "Пластуновская", a: "21:13", d: "21:25", dur: "12 мин", tech: true },
+  { s: "Кореновск", a: "21:50", d: "21:53", dur: "3 мин" },
+  { s: "Выселки", a: "22:25", d: "22:35", dur: "10 мин" },
+  { s: "Тихорецкая", a: "23:49", d: "00:07", dur: "18 мин" },
+  { day: "7 Августа" },
+  { s: "Ровное", a: "01:03", d: "01:06", dur: "3 мин" },
+  { s: "Белоглинская", a: "01:37", d: "01:40", dur: "3 мин" },
+  { s: "Сальск", a: "03:00", d: "03:18", dur: "18 мин" },
+  { s: "Пролетарская", a: "03:56", d: "03:59", dur: "3 мин" },
+  { s: "Куберле", a: "04:56", d: "04:59", dur: "3 мин" },
+  { s: "Зимовники", a: "05:29", d: "05:32", dur: "3 мин" },
+  { s: "Ремонтная", a: "06:05", d: "06:08", dur: "3 мин" },
+  { s: "Котельниково", a: "06:47", d: "06:49", dur: "2 мин" },
+  { s: "Жутово", a: "07:39", d: "07:41", dur: "2 мин" },
+  { s: "Сарепта", a: "09:11", d: "09:13", dur: "2 мин" },
+  { s: "Волгоград-1", a: "09:51", d: "10:27", dur: "36 мин" },
+  { s: "Петров Вал", a: "14:21", d: "14:23", dur: "2 мин" },
+  { s: "Овражная", a: "15:20", d: "15:30", dur: "10 мин", tech: true },
+  { tz: "МСК+1 (Самара)" },
+  { s: "Карамыш", a: "17:22", d: "17:52", dur: "30 мин", tech: true },
+  { s: "Саратов-1-Пасс.", a: "19:34", d: "20:14", dur: "40 мин" },
+  { s: "Сенная", a: "22:42", d: "22:47", dur: "5 мин" },
+  { s: "Кулатка", a: "23:54", d: "23:56", dur: "2 мин" },
+  { day: "8 Августа" },
+  { s: "Возрождение", a: "00:20", d: "00:22", dur: "2 мин" },
+  { s: "Сызрань-Город", a: "01:40", d: "01:47", dur: "7 мин" },
+  { s: "Сызрань-Южная", a: "01:57", d: "02:42", dur: "45 мин", tech: true },
+  { s: "Звезда", a: "04:13", d: "04:32", dur: "19 мин", tech: true },
+  { s: "Самара", a: "05:26", d: "06:24", dur: "58 мин" },
+  { s: "Новоотрадная", a: "07:40", d: "07:42", dur: "2 мин" },
+  { tz: "МСК+2 (Время местное)" },
+  { s: "Бугуруслан", a: "09:47", d: "09:49", dur: "2 мин" },
+  { s: "Абдулино", a: "11:05", d: "11:08", dur: "3 мин" },
+  { s: "Приютово", a: "11:40", d: "11:42", dur: "2 мин" },
+  { s: "Аксаково", a: "12:02", d: "12:04", dur: "2 мин" },
+  { s: "Раевка", a: "13:12", d: "13:14", dur: "2 мин" },
+  { s: "Чишмы-1", a: "14:16", d: "14:18", dur: "2 мин" },
+  { s: "Чишмы-восточные", a: "14:23", d: "14:33", dur: "10 мин", tech: true },
+  { s: "Уфа", a: "15:30", d: "-", dur: "-" }
+];
+
+renderRoute(route577, 'tl-tuda');
+renderRoute(route358, 'tl-obratno');
 </script>
 </body>
 </html>
