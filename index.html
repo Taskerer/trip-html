@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="darkreader-lock">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ЮГ 2026 🌴</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -46,32 +46,38 @@
   --e2: 0 8px 24px rgba(0,0,0,0.5);
 }
 
-/* ═════════ БАЗОВЫЕ СТИЛИ И СБРОС ═════════ */
+/* ═════════ БАЗОВЫЕ СТИЛИ И СБРОС (БЕЗ ПОЛОСЫ ПРОКРУТКИ) ═════════ */
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-body {
+html, body {
   background:var(--bg);
   color:var(--on-bg);
   font-family:var(--fb);
   line-height:1.5;
+  width:100%;
+  max-width:100%;
   overflow-x:hidden;
-  padding-top:60px; /* Отступ под фиксированную шапку */
-  -webkit-font-smoothing: antialiased; /* Сглаживание шрифтов, устраняет артефакты текста */
+  padding-top:60px;
+  -webkit-font-smoothing: antialiased;
   transition:background .3s,color .3s;
+  /* Скрываем скроллбар для идеального центрирования на мобилках */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
-::-webkit-scrollbar{width:6px}
-::-webkit-scrollbar-thumb{background:var(--out-var);border-radius:3px}
+::-webkit-scrollbar {
+  display: none;
+}
 
-/* ═════════ ШАПКА (С ПЛАВНЫМ СКРЫТИЕМ) ═════════ */
+/* ═════════ ШАПКА ═════════ */
 .top-bar {
-  position:fixed; /* Изменено со sticky на fixed для плавности */
+  position:fixed;
   top:0; left:0; width:100%;
   z-index:100;
   background:color-mix(in srgb,var(--bg) 85%,transparent);
   backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px); /* Исправление артефактов блюра в Safari/iOS */
+  -webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--out-var);
   transform: translateY(0);
-  transition: transform 0.35s cubic-bezier(0.33, 1, 0.68, 1); /* Плавная кривая анимации */
+  transition: transform 0.35s cubic-bezier(0.33, 1, 0.68, 1);
   will-change: transform;
 }
 .top-bar.hidden {
@@ -82,12 +88,12 @@ body {
 .theme-btn { width:36px; height:36px; border-radius:var(--r-m); border:none; background:var(--surf-hi); color:var(--on-bg); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:transform .2s,background .2s; }
 .theme-btn:active { transform:scale(.9); }
 
-/* ═════════ КОНТЕЙНЕРЫ И ТЕКСТ ═════════ */
-.mobile-container { max-width:700px; margin:0 auto; padding:20px; }
+/* ═════════ КОНТЕЙНЕРЫ ═════════ */
+.mobile-container { max-width:700px; margin:0 auto; padding:20px; box-sizing:border-box; }
 .hero-title { font-family:var(--fd); font-size:clamp(22px,6vw,32px); font-weight:900; margin-bottom:20px; letter-spacing:-.02em; }
 .section-title { font-family:var(--fd); font-size:18px; font-weight:700; margin:32px 0 16px; }
 
-/* ═════════ КАРТОЧКИ (СВОДКА) ═════════ */
+/* ═════════ КАРТОЧКИ ═════════ */
 .route-cards { display:flex; flex-direction:column; gap:16px; }
 .rcard {
   background:var(--surf-c);
@@ -95,7 +101,6 @@ body {
   padding:20px;
   box-shadow:var(--e1);
   cursor:pointer;
-  /* Аппаратное ускорение для устранения мерцаний при скролле */
   transform: translateZ(0);
   backface-visibility: hidden;
   transition:transform .2s,box-shadow .2s;
@@ -112,29 +117,54 @@ body {
 .rc-info { background:color-mix(in srgb,var(--on-bg) 4%,transparent); padding:12px; border-radius:var(--r-m); font-size:14px; display:flex; flex-direction:column; gap:6px; }
 
 /* ═════════ ТАЙМЛАЙН (ПОДРОБНЫЙ МАРШРУТ) ═════════ */
-.tl {
-  background:var(--surf-c);
-  border-radius:var(--r-xl);
-  padding:12px 20px;
-  box-shadow:var(--e1);
-  transform: translateZ(0); /* Защита от артефактов на стыке теней */
-}
+.tl { background:var(--surf-c); border-radius:var(--r-xl); padding:12px 20px; box-shadow:var(--e1); transform: translateZ(0); overflow:hidden; }
 .tl-day { font-family:var(--fd); font-size:14px; font-weight:700; background:color-mix(in srgb,var(--p) 15%,transparent); color:var(--p); padding:6px 12px; border-radius:var(--r-m); margin:16px 0 8px; text-align:center; }
 .tl.reverse .tl-day { background:color-mix(in srgb,var(--s) 15%,transparent); color:var(--s); }
 .tl-tz { font-family:var(--fm); font-size:11px; color:var(--on-sv); opacity:.8; text-align:center; margin-bottom:12px; font-style:italic; }
 
-.tl-row { display:flex; align-items:stretch; }
+.tl-row { display:flex; align-items:stretch; transition: opacity 0.3s, filter 0.3s; position:relative; }
 .tl-row.tech .tl-station { opacity:.65; font-weight:500; }
-.tl-times { width:45px; padding:12px 0; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; font-family:var(--fm); font-size:13px; font-weight:500; flex-shrink:0; }
+.tl-times { width:45px; padding:12px 0; display:flex; flex-direction:column; justify-content:center; align-items:flex-end; font-family:var(--fm); font-size:13px; font-weight:500; flex-shrink:0; transition: opacity 0.3s; }
 .tl-arr { opacity:.6; font-size:11px; }
 .tl-dep { font-weight:700; }
 .tl-dur { font-size:10px; color:var(--p); font-weight:700; margin:2px 0; }
 .tl.reverse .tl-dur { color:var(--s); }
 
-.tl-station { flex:1; padding:12px 0 12px 16px; border-left:2px solid var(--out-var); margin-left:12px; position:relative; display:flex; align-items:center; font-weight:600; font-size:14.5px; line-height:1.2; }
-.tl-station::before { content:''; position:absolute; left:-6px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--surf-c); border:2px solid var(--p); border-radius:50%; transition:border-color .2s; }
+.tl-station { flex:1; padding:12px 0 12px 16px; border-left:2px solid var(--out-var); margin-left:12px; position:relative; display:flex; align-items:center; font-weight:600; font-size:14.5px; line-height:1.2; transition: transform 0.3s, color 0.3s; }
+.tl-station::before { content:''; position:absolute; left:-6px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--surf-c); border:2px solid var(--p); border-radius:50%; transition:border-color .2s, box-shadow .3s; }
 .tl.reverse .tl-station::before { border-color:var(--s); }
 .tech-badge { font-size:9px; font-family:var(--fm); text-transform:uppercase; padding:2px 6px; background:color-mix(in srgb,currentColor 12%,transparent); border-radius:4px; margin-left:8px; font-weight:700; flex-shrink:0; }
+
+/* ═════════ АНИМАЦИИ REAL-TIME ТРЕКЕРА ═════════ */
+.tl-row.past { opacity: 0.35; filter: grayscale(100%); }
+
+.tl-row.active-stop .tl-station { color: var(--p); font-weight: 900; transform: scale(1.02); transform-origin: left center; }
+.tl.reverse .tl-row.active-stop .tl-station { color: var(--s); }
+
+.tl-row.active-stop .tl-station::before {
+    background: var(--p);
+    animation: pulse-ring 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.tl.reverse .tl-row.active-stop .tl-station::before {
+    background: var(--s);
+    animation: pulse-ring-rev 1.5s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.tl-row.en-route .tl-station::before { border-color: var(--p); animation: pulse-border 1.5s infinite; }
+.tl.reverse .tl-row.en-route .tl-station::before { border-color: var(--s); animation: pulse-border 1.5s infinite; }
+
+.en-route-badge {
+    position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+    font-size: 10px; font-family: var(--fm); background: var(--p); color: #fff;
+    padding: 4px 8px; border-radius: 6px; font-weight: 700;
+    animation: pulse-badge 2s infinite; white-space: nowrap; box-shadow: var(--e1);
+}
+.tl.reverse .en-route-badge { background: var(--s); }
+
+@keyframes pulse-ring { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--p) 50%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@keyframes pulse-ring-rev { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--s) 50%, transparent); } 70% { box-shadow: 0 0 0 10px transparent; } 100% { box-shadow: 0 0 0 0 transparent; } }
+@keyframes pulse-border { 0%, 100% { border-width: 2px; transform:translateY(-50%) scale(1); } 50% { border-width: 4px; transform:translateY(-50%) scale(1.3); } }
+@keyframes pulse-badge { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
 /* ═════════ ПОПАПЫ ═════════ */
 #popup-overlay { position:fixed; inset:0; z-index:600; background:rgba(0,0,0,.5); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .25s; }
@@ -213,16 +243,11 @@ const topBar = document.querySelector('.top-bar');
 
 window.addEventListener('scroll', () => {
   const currentScroll = window.pageYOffset || document.documentElement.scrollTop;
-
-  // Если скроллим вниз и прошли больше высоты шапки (60px)
   if (currentScroll > lastScroll && currentScroll > 60) {
     topBar.classList.add('hidden');
   } else {
-    // Если скроллим вверх
     topBar.classList.remove('hidden');
   }
-
-  // Игнорируем отрицательный скролл (bounce-эффект в Safari)
   lastScroll = Math.max(0, currentScroll);
 }, { passive: true });
 
@@ -283,48 +308,9 @@ function closePopup() {
   document.getElementById('popup-overlay').classList.remove('open');
   document.body.style.overflow = '';
 }
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopup(); });
 
-// Закрывать попап по кнопке ESC
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closePopup();
-});
-
-// ══════════════ РЕНДЕР МАРШРУТОВ ══════════════
-function renderRoute(routeData, containerId) {
-    const container = document.getElementById(containerId);
-    let html = '';
-    routeData.forEach(item => {
-        if (item.day) {
-            html += `<div class="tl-day">${item.day}</div>`;
-        } else if (item.tz) {
-            html += `<div class="tl-tz">${item.tz}</div>`;
-        } else if (item.s) {
-            const isTech = item.tech ? ' tech' : '';
-            const techLabel = item.tech ? `<span class="tech-badge">Тех</span>` : '';
-
-            let timeHtml = '';
-            if (item.a === '-' && item.d !== '-') {
-                timeHtml = `<div class="tl-dep" style="font-size:14px">${item.d}</div>`;
-            } else if (item.a !== '-' && item.d === '-') {
-                timeHtml = `<div class="tl-arr" style="font-size:14px; opacity:1; color:currentColor; font-weight:700">${item.a}</div>`;
-            } else {
-                timeHtml = `
-                    <div class="tl-arr">${item.a}</div>
-                    <div class="tl-dur">${item.dur}</div>
-                    <div class="tl-dep">${item.d}</div>
-                `;
-            }
-
-            html += `
-            <div class="tl-row${isTech}">
-                <div class="tl-times">${timeHtml}</div>
-                <div class="tl-station">${item.s} ${techLabel}</div>
-            </div>`;
-        }
-    });
-    container.innerHTML = html;
-}
-
+// ══════════════ ДАННЫЕ МАРШРУТОВ ══════════════
 const route577 = [
   { day: "28 Июля", tz: "МСК+2 (Время местное)" },
   { s: "Уфа", a: "06:21", d: "06:58", dur: "37 мин" },
@@ -440,8 +426,178 @@ const route358 = [
   { s: "Уфа", a: "15:30", d: "-", dur: "-" }
 ];
 
+// ══════════════ ПАРСИНГ ДАТЫ (ИСПРАВЛЕНО ДЛЯ РЕАЛ-ТАЙМА) ══════════════
+function parseRouteTimestamps(routeData) {
+  let cMonth = 6, cDate = 1, cTz = 3;
+
+  routeData.forEach(item => {
+    // ВАЖНО: Раздельные if, чтобы можно было парсить и дату, и зону из одного объекта (например: {day: "28 Июля", tz: "МСК+2"})
+    if (item.day) {
+      const m = item.day.match(/(\d+)\s+([А-Яа-яA-Za-z]+)/);
+      if (m) {
+        cDate = parseInt(m[1]);
+        if (m[2].toLowerCase().startsWith("июл")) cMonth = 6;
+        if (m[2].toLowerCase().startsWith("авг")) cMonth = 7;
+      }
+    }
+
+    if (item.tz) {
+      if (item.tz.includes("МСК+2")) cTz = 5;
+      else if (item.tz.includes("МСК+1")) cTz = 4;
+      else if (item.tz.includes("МСК")) cTz = 3;
+    }
+
+    if (item.s) {
+      let aTs = null, dTs = null;
+      if (item.a && item.a !== '-') {
+         const p = item.a.split(':');
+         aTs = Date.UTC(2026, cMonth, cDate, parseInt(p[0]) - cTz, parseInt(p[1]));
+      }
+      if (item.d && item.d !== '-') {
+         let dDate = cDate, dMonth = cMonth;
+         // Умная обработка перехода через полночь (когда приехали до 00:00, а уехали после 00:00)
+         if (item.a && item.a !== '-') {
+             if (parseInt(item.d.split(':')[0]) < parseInt(item.a.split(':')[0])) {
+                 dDate++; // Date.UTC сам переведет 32 Июля в 1 Августа
+             }
+         }
+         const p = item.d.split(':');
+         dTs = Date.UTC(2026, dMonth, dDate, parseInt(p[0]) - cTz, parseInt(p[1]));
+      }
+
+      if (aTs && !dTs) dTs = aTs;
+      if (dTs && !aTs) aTs = dTs;
+
+      item.ts_a = aTs;
+      item.ts_d = dTs;
+    }
+  });
+}
+
+// ══════════════ РЕНДЕР И ТРЕКИНГ ══════════════
+function renderRoute(routeData, containerId) {
+    parseRouteTimestamps(routeData);
+    const container = document.getElementById(containerId);
+    let html = '';
+
+    routeData.forEach(item => {
+        if (item.day) {
+            html += `<div class="tl-day">${item.day}</div>`;
+        } else if (item.tz) {
+            html += `<div class="tl-tz">${item.tz}</div>`;
+        } else if (item.s) {
+            const isTech = item.tech ? ' tech' : '';
+            const techLabel = item.tech ? `<span class="tech-badge">Тех</span>` : '';
+
+            let timeHtml = '';
+            if (item.a === '-' && item.d !== '-') {
+                timeHtml = `<div class="tl-dep" style="font-size:14px">${item.d}</div>`;
+            } else if (item.a !== '-' && item.d === '-') {
+                timeHtml = `<div class="tl-arr" style="font-size:14px; opacity:1; color:currentColor; font-weight:700">${item.a}</div>`;
+            } else {
+                timeHtml = `<div class="tl-arr">${item.a}</div><div class="tl-dur">${item.dur}</div><div class="tl-dep">${item.d}</div>`;
+            }
+
+            html += `
+            <div class="tl-row${isTech}" data-tsa="${item.ts_a}" data-tsd="${item.ts_d}">
+                <div class="tl-times">${timeHtml}</div>
+                <div class="tl-station">${item.s} ${techLabel}</div>
+            </div>`;
+        }
+    });
+    container.innerHTML = html;
+}
+
 renderRoute(route577, 'tl-tuda');
 renderRoute(route358, 'tl-obratno');
+
+let hasAutoScrolled = false;
+
+function updateRealTimeTracking() {
+    const now = Date.now();
+    // 💡 Раскомментируйте эту строку для проверки. Например, тут сымитировано 28 Июля, 13:00 МСК:
+    // const now = Date.UTC(2026, 6, 28, 10, 00);
+
+    document.querySelectorAll('.tl').forEach(tl => {
+        const rows = Array.from(tl.querySelectorAll('.tl-row[data-tsa]'));
+        if(rows.length === 0) return;
+
+        let foundCurrent = false;
+        const firstTsa = parseInt(rows[0].getAttribute('data-tsa'));
+        const lastTsd = parseInt(rows[rows.length - 1].getAttribute('data-tsd'));
+
+        // ЕСЛИ ПОЕЗДКА ЕЩЕ НЕ НАЧАЛАСЬ
+        if (now < firstTsa) {
+            rows.forEach(r => r.classList.remove('past', 'active-stop', 'en-route'));
+            rows[0].classList.add('en-route');
+            if(!rows[0].querySelector('.en-route-badge')) {
+                rows[0].querySelector('.tl-station').insertAdjacentHTML('beforeend', '<span class="en-route-badge">Ожидание</span>');
+            }
+            return;
+        }
+
+        // ЕСЛИ ПОЕЗДКА УЖЕ ОКОНЧЕНА
+        if (now > lastTsd) {
+            rows.forEach(r => {
+                r.classList.remove('active-stop', 'en-route');
+                r.classList.add('past');
+                const b = r.querySelector('.en-route-badge');
+                if(b) b.remove();
+            });
+            const lastRow = rows[rows.length - 1];
+            lastRow.classList.remove('past');
+            lastRow.classList.add('active-stop');
+            if(!lastRow.querySelector('.en-route-badge')) {
+                lastRow.querySelector('.tl-station').insertAdjacentHTML('beforeend', '<span class="en-route-badge" style="background:var(--on-sv)">Прибыли</span>');
+            }
+            return;
+        }
+
+        // ЕСЛИ МЫ В ПУТИ
+        rows.forEach((row, index) => {
+            const tsa = parseInt(row.getAttribute('data-tsa'));
+            const tsd = parseInt(row.getAttribute('data-tsd'));
+
+            row.classList.remove('past', 'active-stop', 'en-route');
+            const badge = row.querySelector('.en-route-badge');
+            if (badge) badge.remove();
+
+            if (now > tsd) {
+                // Станция пройдена
+                row.classList.add('past');
+            } else if (now >= tsa && now <= tsd) {
+                // Прямо сейчас стоим на этой станции
+                row.classList.add('active-stop');
+                foundCurrent = true;
+                if (!hasAutoScrolled) triggerScroll(row);
+            } else if (now < tsa && !foundCurrent) {
+                // Мы в пути к этой станции
+                const prevRow = rows[index - 1];
+                if (prevRow) {
+                    const prevTsd = parseInt(prevRow.getAttribute('data-tsd'));
+                    if (now > prevTsd && now < tsa) {
+                        row.classList.add('en-route');
+                        row.querySelector('.tl-station').insertAdjacentHTML('beforeend', '<span class="en-route-badge">В пути к станции</span>');
+                        foundCurrent = true;
+                        if (!hasAutoScrolled) triggerScroll(row);
+                    }
+                }
+            }
+        });
+    });
+}
+
+function triggerScroll(row) {
+    hasAutoScrolled = true;
+    setTimeout(() => {
+        const y = row.getBoundingClientRect().top + window.pageYOffset - 120; // 120px отступ под шапку
+        window.scrollTo({ top: y, behavior: 'smooth' });
+    }, 600);
+}
+
+// Запускаем трекер при загрузке и обновляем каждую минуту
+updateRealTimeTracking();
+setInterval(updateRealTimeTracking, 60000);
 </script>
 </body>
 </html>
