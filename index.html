@@ -322,11 +322,18 @@ const POPUPS = {
 function openPopup(id) {
   const data = POPUPS[id];
   if (!data) return;
-  document.getElementById('popup-content').innerHTML = `...`; // твой код
+
+  // Возвращаем генерацию HTML вместо троеточия!
+  document.getElementById('popup-content').innerHTML = `
+    <span class="popup-icon">${data.icon}</span>
+    <div class="popup-title">${data.title}</div>
+    <div class="popup-body">${data.body}</div>
+  `;
+
   document.getElementById('popup-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
 
-  // Добавляем состояние в историю
+  // Добавляем состояние в историю для работы кнопки "Назад"
   history.pushState({ popupOpen: true }, '', '#' + id);
 }
 
