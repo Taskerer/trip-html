@@ -144,14 +144,15 @@ html, body {
 .progress-text { position:absolute; top:20px; right:20px; font-size:10px; font-weight:700; font-family:var(--fm); opacity:0; transition:opacity .3s; }
 .progress-text.visible { opacity:1; }
 
+/* Убираем translateY(-50%) и привязываем поезд прямо к линии */
 .train-crawler {
-  position:absolute;
-  left:-14px;
-  font-size:16px;
-  transform:translateY(-50%);
-  z-index:10;
-  transition:top 60s linear; /* Плавное скольжение поезда */
-  text-shadow:0 2px 4px rgba(0,0,0,0.3);
+  position: absolute;
+  left: -14px;
+  font-size: 16px;
+  z-index: 10;
+  transition: top 60s linear;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  margin-top: -10px; /* Центрируем иконку относительно точки */
 }
 
 /* ═════════ АНИМАЦИИ REAL-TIME ТРЕКЕРА ═════════ */
@@ -278,6 +279,11 @@ function toggleTheme() {
   dark = !dark;
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   document.getElementById('ti').textContent = dark ? '☀️' : '🌙';
+
+  // Меняем цвет статус-бара
+  document.querySelector('meta[name="theme-color"]').setAttribute(
+      'content', dark ? '#14110E' : '#7B5800'
+  );
 }
 
 const POPUPS = {
@@ -316,19 +322,28 @@ const POPUPS = {
 function openPopup(id) {
   const data = POPUPS[id];
   if (!data) return;
-  document.getElementById('popup-content').innerHTML = `
-    <span class="popup-icon">${data.icon}</span>
-    <div class="popup-title">${data.title}</div>
-    <div class="popup-body">${data.body}</div>
-  `;
+  document.getElementById('popup-content').innerHTML = `...`; // твой код
   document.getElementById('popup-overlay').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // Добавляем состояние в историю
+  history.pushState({ popupOpen: true }, '', '#' + id);
 }
 
 function closePopup() {
   document.getElementById('popup-overlay').classList.remove('open');
   document.body.style.overflow = '';
+  // Очищаем хэш, если закрыли крестиком или кликом по фону
+  if (window.location.hash) {
+      history.back();
+  }
 }
+
+// Слушаем системную кнопку "Назад"
+window.addEventListener('popstate', (e) => {
+    document.getElementById('popup-overlay').classList.remove('open');
+    document.body.style.overflow = '';
+});
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closePopup(); });
 
 // ══════════════ ДАННЫЕ МАРШРУТОВ ══════════════
@@ -450,9 +465,9 @@ const route358 = [
 // ══════════════ ПАРСИНГ ДАТЫ (ИСПРАВЛЕНО ДЛЯ РЕАЛ-ТАЙМА) ══════════════
 function parseRouteTimestamps(routeData) {
   let cMonth = 6, cDate = 1, cTz = 3;
+  let lastTs = 0; // Сохраняем последнее время для контроля полуночи
 
   routeData.forEach(item => {
-    // ВАЖНО: Раздельные if, чтобы можно было парсить и дату, и зону из одного объекта (например: {day: "28 Июля", tz: "МСК+2"})
     if (item.day) {
       const m = item.day.match(/(\d+)\s+([А-Яа-яA-Za-z]+)/);
       if (m) {
@@ -461,7 +476,6 @@ function parseRouteTimestamps(routeData) {
         if (m[2].toLowerCase().startsWith("авг")) cMonth = 7;
       }
     }
-
     if (item.tz) {
       if (item.tz.includes("МСК+2")) cTz = 5;
       else if (item.tz.includes("МСК+1")) cTz = 4;
@@ -470,27 +484,26 @@ function parseRouteTimestamps(routeData) {
 
     if (item.s) {
       let aTs = null, dTs = null;
-      if (item.a && item.a !== '-') {
-         const p = item.a.split(':');
-         aTs = Date.UTC(2026, cMonth, cDate, parseInt(p[0]) - cTz, parseInt(p[1]));
-      }
-      if (item.d && item.d !== '-') {
-         let dDate = cDate, dMonth = cMonth;
-         // Умная обработка перехода через полночь (когда приехали до 00:00, а уехали после 00:00)
-         if (item.a && item.a !== '-') {
-             if (parseInt(item.d.split(':')[0]) < parseInt(item.a.split(':')[0])) {
-                 dDate++; // Date.UTC сам переведет 32 Июля в 1 Августа
-             }
-         }
-         const p = item.d.split(':');
-         dTs = Date.UTC(2026, dMonth, dDate, parseInt(p[0]) - cTz, parseInt(p[1]));
-      }
 
-      if (aTs && !dTs) dTs = aTs;
-      if (dTs && !aTs) aTs = dTs;
+      // Вспомогательная функция для расчета UTC таймстемпа с проверкой перехода через полночь
+      const getSafeTs = (timeStr) => {
+        if (!timeStr || timeStr === '-') return null;
+        const [h, m] = timeStr.split(':').map(Number);
+        let ts = Date.UTC(2026, cMonth, cDate, h - cTz, m);
+        // Если время оказалось меньше предыдущей станции, значит наступил новый день
+        if (lastTs && ts < lastTs) {
+            cDate++;
+            ts = Date.UTC(2026, cMonth, cDate, h - cTz, m);
+        }
+        lastTs = ts;
+        return ts;
+      };
 
-      item.ts_a = aTs;
-      item.ts_d = dTs;
+      aTs = getSafeTs(item.a);
+      dTs = getSafeTs(item.d);
+
+      item.ts_a = aTs || dTs;
+      item.ts_d = dTs || aTs;
     }
   });
 }
@@ -627,10 +640,11 @@ function updateRealTimeTracking() {
                         row.querySelector('.tl-station').insertAdjacentHTML('afterbegin', '<div class="train-crawler">🚂</div>');
                         const activeCrawler = row.querySelector('.train-crawler');
 
-                        // Высчитываем прогресс (от 0.0 до 1.0) между прошлой и будущей станцией
+                        // Высчитываем прогресс (от 0.0 до 1.0)
                         const segmentProgress = (now - prevTsd) / (tsa - prevTsd);
-                        // Двигаем поезд от центра прошлой ячейки (-50%) до центра текущей (50%)
-                        const topValue = -50 + (segmentProgress * 100);
+                        // Теперь мы берем высоту всей ячейки текущей станции.
+                        // -100% = визуально на уровне прошлой станции. 0% = доехали до текущей.
+                        const topValue = -100 + (segmentProgress * 100);
                         activeCrawler.style.top = topValue + '%';
 
                         foundCurrent = true;

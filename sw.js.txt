@@ -1,14 +1,10 @@
-const CACHE_NAME = 'ug-2026-v2';
+const CACHE_NAME = 'ug-2026-v1';
 
 // Устанавливаем и сразу кэшируем главную страницу
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll([
-          './',
-          './index.html',
-          './manifest.json',
-      ]);
+      return cache.addAll(['./', './index.html']);
     })
   );
   self.skipWaiting();
