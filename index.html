@@ -9,8 +9,17 @@
 <title>ЮГ 2026 🌴</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=block">
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=block" rel="stylesheet">
+
+<!-- 1. Предзагрузка с точными весами (без лишнего мусора) -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Unbounded:wght@700;900&display=swap">
+
+<!-- 2. Асинхронная загрузка (не тормозит работу скриптов и отрисовку) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Unbounded:wght@700;900&display=swap" media="print" onload="this.media='all'">
+
+<!-- 3. Страховка для пользователей с отключенным JS -->
+<noscript>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=Unbounded:wght@700;900&display=swap">
+</noscript>
 <style>
 /* ═════════ CSS ПЕРЕМЕННЫЕ И ТЕМЫ ═════════ */
 :root {
@@ -29,9 +38,9 @@
   --e1: 0 4px 12px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.03);
   --e2: 0 8px 24px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04);
   --r-m: 8px; --r-l: 12px; --r-xl: 20px;
-  --fd: 'Unbounded', sans-serif;
-  --fb: 'DM Sans', sans-serif;
-  --fm: 'JetBrains Mono', monospace;
+  --fd: 'Unbounded', system-ui, -apple-system, sans-serif;
+  --fb: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --fm: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 [data-theme="dark"] {
   --p:        #FFB951;
@@ -154,7 +163,7 @@ body.fonts-loaded {
 .tl-dur { font-size:10px; color:var(--p); font-weight:700; margin:2px 0; }
 .tl.reverse .tl-dur { color:var(--s); }
 
-.tl-station { flex:1; padding:12px 0 12px 16px; border-left:2px solid var(--out-var); margin-left:12px; position:relative; display:flex; align-items:center; font-weight:600; font-size:14.5px; line-height:1.2; transition: transform 0.3s, color 0.3s; }
+.tl-station { flex:1; padding:12px 0 12px 16px; border-left:2px solid var(--out-var); margin-left:12px; position:relative; display:flex; align-items:center; font-weight:700; font-size:14.5px; line-height:1.2; transition: transform 0.3s, color 0.3s; }
 .tl-station::before { content:''; position:absolute; left:-6px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:var(--surf-c); border:2px solid var(--p); border-radius:50%; transition:border-color .2s, box-shadow .3s; }
 .tl.reverse .tl-station::before { border-color:var(--s); }
 .tech-badge { font-size:9px; font-family:var(--fm); text-transform:uppercase; padding:2px 6px; background:color-mix(in srgb,currentColor 12%,transparent); border-radius:4px; margin-left:8px; font-weight:700; flex-shrink:0; }
@@ -224,7 +233,7 @@ body.fonts-loaded {
 #popup-overlay.open #popup-box { transform:scale(1) translateY(0) translateZ(0); }
 .popup-close { position:absolute; top:12px; right:12px; width:32px; height:32px; border-radius:50%; border:none; background:var(--surf-hi); color:var(--on-bg); cursor:pointer; font-size:14px; display:flex; align-items:center; justify-content:center; font-family:var(--fb); }
 .popup-icon { font-size:32px; margin-bottom:12px; display:block; }
-.popup-title { font-family:var(--fd); font-weight:800; font-size:18px; margin-bottom:12px; color:var(--p); line-height:1.2; }
+.popup-title { font-family:var(--fd); font-weight:900; font-size:18px; margin-bottom:12px; color:var(--p); line-height:1.2; }
 .popup-body { font-size:14px; line-height:1.6; color:var(--on-bg); }
 .popup-body p { margin-bottom:10px; }
 .popup-berth { background:var(--surf-hi); border-radius:var(--r-l); padding:12px; font-family:var(--fm); font-size:12px; line-height:1.8; margin:12px 0; }
