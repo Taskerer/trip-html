@@ -1,4 +1,4 @@
-const CACHE_VERSION = 'v11';
+const CACHE_VERSION = 'v12';
 const APP_CACHE = `ug-app-${CACHE_VERSION}`;
 const FONT_CACHE = `ug-fonts-v2`; // Обновляем кэш шрифтов
 
