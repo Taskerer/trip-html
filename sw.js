@@ -1,6 +1,6 @@
-const CACHE_VERSION = 'v5'; // Обновили версию!
+const CACHE_VERSION = 'v6'; // Обязательно v6, чтобы перезаписать старые правила
 const APP_CACHE = `ug-app-${CACHE_VERSION}`;
-const FONT_CACHE = `ug-fonts-v1`;
+const FONT_CACHE = `ug-fonts-v2`; // Обновляем кэш шрифтов
 
 const URLS_TO_CACHE = [
   './',
@@ -19,7 +19,8 @@ self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => Promise.all(
       cacheNames.map(cacheName => {
-        if (cacheName.startsWith('ug-app-') && cacheName !== APP_CACHE) {
+        // Удаляем ВСЕ старые кэши, кроме актуальных APP_CACHE и FONT_CACHE
+        if (cacheName !== APP_CACHE && cacheName !== FONT_CACHE) {
           return caches.delete(cacheName);
         }
       })
@@ -31,20 +32,20 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // 1. ЖЕЛЕЗОБЕТОННОЕ КЭШИРОВАНИЕ ШРИФТОВ (С игнорированием Vary)
+  // 1. ЖЕЛЕЗОБЕТОННОЕ КЭШИРОВАНИЕ ШРИФТОВ
   if (url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com') {
     event.respondWith(
-      // ignoreVary: true - магия, которая чинит баг с оффлайном!
       caches.match(event.request, { ignoreVary: true }).then(cachedResponse => {
         if (cachedResponse) return cachedResponse;
 
         return fetch(event.request).then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
+          // ИСПРАВЛЕНИЕ: Разрешаем сохранять ответы со статусом 0 (Opaque responses)
+          if (networkResponse && (networkResponse.status === 200 || networkResponse.status === 0)) {
             const responseToCache = networkResponse.clone();
             caches.open(FONT_CACHE).then(cache => cache.put(event.request, responseToCache));
           }
           return networkResponse;
-        }).catch(() => { /* В оффлайне просто ничего не делаем */ });
+        }).catch(() => { /* В оффлайне тихо игнорируем ошибку сети */ });
       })
     );
     return;
@@ -54,7 +55,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request, { ignoreVary: true }).then(cachedResponse => {
       const fetchPromise = fetch(event.request).then(networkResponse => {
-        if (event.request.method === 'GET' && networkResponse && networkResponse.status === 200) {
+        if (event.request.method === 'GET' && networkResponse && (networkResponse.status === 200 || networkResponse.status === 0)) {
           caches.open(APP_CACHE).then(cache => cache.put(event.request, networkResponse.clone()));
         }
         return networkResponse;
