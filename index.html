@@ -62,18 +62,22 @@ html, body {
   overflow-x:hidden;
   padding-top:60px;
   -webkit-font-smoothing: antialiased;
-
-  /* Добавлены свойства для анимации плавного появления */
-  opacity: 0;
-  transition: opacity 0.3s ease-out, background 0.3s, color 0.3s;
-
+  transition:background .3s,color .3s;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-/* Класс, который покажет приложение, когда шрифты будут готовы */
+
+/* Прячем ТОЛЬКО body до загрузки шрифтов */
+body {
+  opacity: 0;
+}
+
+/* Показываем body, когда шрифты готовы */
 body.fonts-loaded {
   opacity: 1;
+  transition: opacity 0.3s ease-out, background 0.3s, color 0.3s;
 }
+
 ::-webkit-scrollbar {
   display: none;
 }
