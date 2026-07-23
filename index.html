@@ -169,9 +169,9 @@ html, body {
   left:-14px;
   font-size:16px;
   z-index:10;
-  transition:top 60s linear;
+  transition:top 1s linear; /* Исправлено: поезд больше не будет "догонять" код */
   text-shadow:0 2px 4px rgba(0,0,0,0.3);
-  margin-top:-10px; /* Центрирует иконку точно по линии */
+  margin-top:-10px;
 }
 
 /* ═════════ АНИМАЦИИ REAL-TIME ТРЕКЕРА ═════════ */
@@ -583,9 +583,6 @@ function updateRealTimeTracking() {
     const pText = document.getElementById('top-progress-text');
     let tripActive = false;
 
-    // Очищаем старые поезда перед пересчетом
-    document.querySelectorAll('.train-crawler').forEach(el => el.remove());
-
     document.querySelectorAll('.tl').forEach(tl => {
         const rows = Array.from(tl.querySelectorAll('.tl-row[data-tsa]'));
         if(rows.length === 0) return;
@@ -609,7 +606,10 @@ function updateRealTimeTracking() {
 
         // ДО ПОЕЗДКИ
         if (now < firstTsa) {
-            rows.forEach(r => r.classList.remove('past', 'active-stop', 'en-route'));
+            rows.forEach(r => {
+                r.classList.remove('past', 'active-stop', 'en-route');
+                if (r.querySelector('.train-crawler')) r.querySelector('.train-crawler').remove();
+            });
             rows[0].classList.add('en-route');
             if(!rows[0].querySelector('.en-route-badge')) {
                 rows[0].querySelector('.tl-station').insertAdjacentHTML('beforeend', '<span class="en-route-badge">Ожидание</span>');
@@ -624,6 +624,7 @@ function updateRealTimeTracking() {
                 r.classList.add('past');
                 const b = r.querySelector('.en-route-badge');
                 if(b) b.remove();
+                if (r.querySelector('.train-crawler')) r.querySelector('.train-crawler').remove();
             });
             const lastRow = rows[rows.length - 1];
             lastRow.classList.remove('past');
@@ -639,55 +640,73 @@ function updateRealTimeTracking() {
             const tsa = parseInt(row.getAttribute('data-tsa'));
             const tsd = parseInt(row.getAttribute('data-tsd'));
 
-            row.classList.remove('past', 'active-stop', 'en-route');
-            const badge = row.querySelector('.en-route-badge');
-            if (badge) badge.remove();
-
             if (now > tsd) {
                 // Станция пройдена
                 row.classList.add('past');
+                row.classList.remove('active-stop', 'en-route');
+                if (row.querySelector('.en-route-badge')) row.querySelector('.en-route-badge').remove();
+                if (row.querySelector('.train-crawler')) row.querySelector('.train-crawler').remove();
             } else if (now >= tsa && now <= tsd) {
                 // Прямо сейчас стоим на станции
                 row.classList.add('active-stop');
+                row.classList.remove('past', 'en-route');
+                if (row.querySelector('.en-route-badge')) row.querySelector('.en-route-badge').remove();
+
+                // ИСПРАВЛЕНИЕ: Добавляем поезд на стоянке (чтобы не пропадал)
+                let train = row.querySelector('.train-crawler');
+                if (!train) {
+                    row.querySelector('.tl-station').insertAdjacentHTML('afterbegin', '<div class="train-crawler">🚂</div>');
+                    train = row.querySelector('.train-crawler');
+                }
+                train.style.top = '50%'; // Центрируем прямо на точке станции
+
                 foundCurrent = true;
                 if (!hasAutoScrolled) triggerScroll(row);
             } else if (now < tsa && !foundCurrent) {
                 // Мы в пути к этой станции
                 const prevRow = rows[index - 1];
-                if (prevRow) {
+                  if (prevRow) {
                     const prevTsd = parseInt(prevRow.getAttribute('data-tsd'));
                     if (now > prevTsd && now < tsa) {
                         row.classList.add('en-route');
-                        row.querySelector('.tl-station').insertAdjacentHTML('beforeend', '<span class="en-route-badge">В пути к станции</span>');
+                        row.classList.remove('past', 'active-stop');
 
-                        // ДОБАВЛЯЕМ ПОЕЗД
-                        row.querySelector('.tl-station').insertAdjacentHTML('afterbegin', '<div class="train-crawler">🚂</div>');
-                        const activeCrawler = row.querySelector('.train-crawler');
+                        if (!row.querySelector('.en-route-badge')) {
+                            row.querySelector('.tl-station').insertAdjacentHTML('beforeend', '<span class="en-route-badge">В пути к станции</span>');
+                        }
 
-                        // 🧮 ТОЧНЫЙ ПИКСЕЛЬНЫЙ РАСЧЕТ КООРДИНАТ
+                        // ИСПРАВЛЕНИЕ: Не удаляем иконку, а просто обновляем ее положение
+                        let train = row.querySelector('.train-crawler');
+                        if (!train) {
+                            row.querySelector('.tl-station').insertAdjacentHTML('afterbegin', '<div class="train-crawler">🚂</div>');
+                            train = row.querySelector('.train-crawler');
+                        }
+
                         const segmentProgress = (now - prevTsd) / (tsa - prevTsd);
-
                         const prevStation = prevRow.querySelector('.tl-station');
                         const currStation = row.querySelector('.tl-station');
 
                         const prevRect = prevStation.getBoundingClientRect();
                         const currRect = currStation.getBoundingClientRect();
 
-                        // Y-координата центра кружочка прошлой и текущей станций
                         const prevDotY = prevRect.top + (prevRect.height / 2);
                         const currDotY = currRect.top + (currRect.height / 2);
 
-                        // Смещение (в пикселях) относительно начала текущего блока станции
                         const startY = prevDotY - currRect.top;
                         const endY = currDotY - currRect.top;
 
                         const currentY = startY + (endY - startY) * segmentProgress;
-                        activeCrawler.style.top = currentY + 'px';
+                        train.style.top = currentY + 'px';
 
                         foundCurrent = true;
                         if (!hasAutoScrolled) triggerScroll(row);
-                    }
+                  }
                 }
+            } else {
+                // Будущие станции
+                row.classList.remove('past', 'active-stop', 'en-route');
+                if (row.querySelector('.en-route-badge')) row.querySelector('.en-route-badge').remove();
+                if (row.querySelector('.train-crawler')) row.querySelector('.train-crawler').remove();
             }
         });
     });
@@ -709,7 +728,7 @@ function triggerScroll(row) {
 
 // Запускаем трекер при загрузке и обновляем каждую минуту
 updateRealTimeTracking();
-setInterval(updateRealTimeTracking, 60000);
+setInterval(updateRealTimeTracking, 1000);
 
 // ══════════════ ОФЛАЙН И PWA (SERVICE WORKER) ══════════════
 if ('serviceWorker' in navigator) {
