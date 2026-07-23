@@ -169,7 +169,7 @@ html, body {
 @keyframes pulse-badge { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
 
 /* ═════════ ПОПАПЫ ═════════ */
-#popup-overlay { position:fixed; top:0; left:0; width:100%; height:100%; height:300dvh; z-index:600; background:rgba(0,0,0,.5); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .25s; }
+#popup-overlay { position:fixed; top:0; left:0; width:100%; height:100%; height:100dvh; z-index:600; background:rgba(0,0,0,.5); backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px); display:flex; align-items:center; justify-content:center; padding:20px; opacity:0; pointer-events:none; transition:opacity .25s; }
 #popup-overlay.open { opacity:1; pointer-events:all; }
 #popup-box { background:var(--surf-c); border-radius:var(--r-xl); padding:24px; max-width:400px; width:100%; box-shadow:var(--e2); transform:scale(.95) translateY(10px) translateZ(0); transition:transform .3s cubic-bezier(.34,1.56,.64,1); position:relative; backface-visibility: hidden; }
 #popup-overlay.open #popup-box { transform:scale(1) translateY(0) translateZ(0); }
