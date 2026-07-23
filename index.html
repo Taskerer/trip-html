@@ -7,9 +7,11 @@
 <link rel="manifest" href="manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ЮГ 2026 🌴</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700" rel="stylesheet">
+<!-- Предзагрузка файла стилей Google Fonts (наивысший приоритет) -->
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=block">
+
+<!-- Само подключение шрифтов. &display=block запретит браузеру показывать "уродливый" шрифт до загрузки -->
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=block" rel="stylesheet">
 <style>
 /* ═════════ CSS ПЕРЕМЕННЫЕ И ТЕМЫ ═════════ */
 :root {
@@ -726,7 +728,7 @@ function triggerScroll(row) {
     }, 400);
 }
 
-// Запускаем трекер при загрузке и обновляем каждую минуту
+// Запускаем трекер при загрузке и обновляем каждую секунду
 updateRealTimeTracking();
 setInterval(updateRealTimeTracking, 1000);
 

@@ -1,45 +1,75 @@
-const CACHE_NAME = 'ug-2026-v3';
+const CACHE_VERSION = 'v4'; // Обязательно меняем версию, чтобы браузер обновил SW
+const APP_CACHE = `ug-app-${CACHE_VERSION}`;
+const FONT_CACHE = `ug-fonts-v1`; // Кэш шрифтов обновляется редко
 
-// Устанавливаем и сразу кэшируем главную страницу
+// Что кэшируем сразу при установке
+const URLS_TO_CACHE = [
+  './',
+  './index.html',
+  './manifest.json'
+];
+
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      return cache.addAll([
-          './',
-          './index.html',
-          './manifest.json',
-      ]);
+    caches.open(APP_CACHE).then(cache => {
+      return cache.addAll(URLS_TO_CACHE);
     })
   );
   self.skipWaiting();
 });
 
-// Активация и удаление старых кэшей (если обновите приложение)
 self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys().then(keys => Promise.all(
-      keys.map(key => {
-        if (key !== CACHE_NAME) return caches.delete(key);
-      })
-    ))
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          // Удаляем старые кэши приложения (кроме шрифтов, они статичны)
+          if (cacheName.startsWith('ug-app-') && cacheName !== APP_CACHE) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
   self.clients.claim();
 });
 
-// Стратегия "Stale-while-revalidate" (Сначала кэш, потом сеть)
 self.addEventListener('fetch', event => {
+  const url = new URL(event.request.url);
+
+  // === СТРАТЕГИЯ 1: Для Google Fonts (Сначала кэш, потом сеть) ===
+  // Это уберет моргание шрифтов при повторных заходах
+  if (url.origin === 'https://fonts.googleapis.com' || url.origin === 'https://fonts.gstatic.com') {
+    event.respondWith(
+      caches.match(event.request).then(cachedResponse => {
+        if (cachedResponse) {
+          return cachedResponse; // Отдаем моментально из кэша!
+        }
+        return fetch(event.request).then(networkResponse => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseToCache = networkResponse.clone();
+            caches.open(FONT_CACHE).then(cache => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return networkResponse;
+        });
+      })
+    );
+    return; // Завершаем обработку для шрифтов
+  }
+
+  // === СТРАТЕГИЯ 2: Для самого приложения (Stale-while-revalidate) ===
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       const fetchPromise = fetch(event.request).then(networkResponse => {
-        // Кэшируем успешные ответы (200) и сторонние "непрозрачные" ответы (0) - это наши шрифты!
-        if (event.request.method === 'GET' && (networkResponse.status === 200 || networkResponse.status === 0)) {
-          caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse.clone()));
+        if (event.request.method === 'GET' && networkResponse && networkResponse.status === 200) {
+          caches.open(APP_CACHE).then(cache => cache.put(event.request, networkResponse.clone()));
         }
         return networkResponse;
       }).catch(() => {
-        // Ошибка сети (игнорируем, будет отдан кэш)
+         // Офлайн режим: просто ничего не делаем, вернется cachedResponse
       });
-      // Моментально возвращаем кэш (если есть), а в фоне обновляем
       return cachedResponse || fetchPromise;
     })
   );
