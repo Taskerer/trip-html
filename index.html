@@ -332,22 +332,17 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ══════════════ ТЕМА И ПОПАПЫ ══════════════
-// 1. По умолчанию светлая, включаем тёмную ТОЛЬКО если пользователь ранее её выбрал
-let dark = localStorage.getItem('theme') === 'dark';
+let dark = localStorage.getItem('theme') === 'dark' ||
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-// 2. Если в памяти была тёмная — сразу применяем её при загрузке
-if (dark) {
-  document.documentElement.setAttribute('data-theme', 'dark');
-  document.getElementById('ti').textContent = '☀️';
-}
+if (dark) toggleTheme(true); // Применяем при загрузке
 
-function toggleTheme() {
-  dark = !dark;
-  // Сохраняем выбор в память
+function toggleTheme(init = false) {
+  if (!init) dark = !dark;
   localStorage.setItem('theme', dark ? 'dark' : 'light');
-
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   document.getElementById('ti').textContent = dark ? '☀️' : '🌙';
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#14110E' : '#7B5800');
 }
 
 const POPUPS = {
