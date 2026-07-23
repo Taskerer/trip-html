@@ -86,7 +86,16 @@ html, body {
 .top-bar.hidden {
   transform: translateY(-100%);
 }
-.top-bar-inner { max-width:700px; margin:0 auto; padding:0 20px; display:flex; align-items:center; justify-content:space-between; height:60px; }
+.top-bar-inner {
+  max-width:700px;
+  margin:0 auto;
+  padding:0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  height:60px;
+  position: relative; /* ВАЖНО: держит текст внутри контейнера */
+}
 .logo { font-family:var(--fd); font-size:18px; font-weight:700; color:var(--p); }
 .theme-btn { width:36px; height:36px; border-radius:var(--r-m); border:none; background:var(--surf-hi); color:var(--on-bg); cursor:pointer; font-size:16px; display:flex; align-items:center; justify-content:center; transition:transform .2s,background .2s; }
 .theme-btn:active { transform:scale(.9); }
@@ -141,18 +150,28 @@ html, body {
 /* ═════════ ПРОГРЕСС-БАР И ПОЕЗД НА ТАЙМЛАЙНЕ ═════════ */
 .progress-container { position:absolute; bottom:0; left:0; width:100%; height:4px; background:color-mix(in srgb, var(--on-bg) 10%, transparent); }
 .progress-bar { height:100%; width:0%; background:var(--p); transition:width 1s linear, background 0.5s; }
-.progress-text { position:absolute; top:20px; right:20px; font-size:10px; font-weight:700; font-family:var(--fm); opacity:0; transition:opacity .3s; }
+.progress-text {
+  position:absolute;
+  top:50%;
+  transform:translateY(-50%); /* Идеально ровно по вертикали */
+  right:65px; /* Отодвигаем от кнопки смены темы */
+  font-size:10px;
+  font-weight:700;
+  font-family:var(--fm);
+  opacity:0;
+  transition:opacity .3s;
+}
 .progress-text.visible { opacity:1; }
 
 /* Убираем translateY(-50%) и привязываем поезд прямо к линии */
 .train-crawler {
-  position: absolute;
-  left: -14px;
-  font-size: 16px;
-  z-index: 10;
-  transition: top 60s linear;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-  margin-top: -10px; /* Центрируем иконку относительно точки */
+  position:absolute;
+  left:-14px;
+  font-size:16px;
+  z-index:10;
+  transition:top 60s linear;
+  text-shadow:0 2px 4px rgba(0,0,0,0.3);
+  margin-top:-10px; /* Центрирует иконку точно по линии */
 }
 
 /* ═════════ АНИМАЦИИ REAL-TIME ТРЕКЕРА ═════════ */
@@ -555,18 +574,16 @@ renderRoute(route358, 'tl-obratno');
 let hasAutoScrolled = false;
 
 function updateRealTimeTracking() {
-    // 💡 ТЕПЕРЬ ТЕСТИРОВАТЬ ПРАВИЛЬНО ТАК:
-    // По умолчанию берем реальное время
     let now = Date.now();
 
-    // Если хотите проверить реал-тайм в пути, раскомментируйте ТОЛЬКО строку ниже (мы просто перезаписываем let):
-    // now = Date.UTC(2026, 6, 29, 9, 00);
+    // Для теста поезда в пути раскомментируйте эту строку (например, утро 29 июля):
+    // now = Date.UTC(2026, 6, 29, 8, 00);
 
     const pBar = document.getElementById('top-progress-bar');
     const pText = document.getElementById('top-progress-text');
     let tripActive = false;
 
-    // Очищаем старые поезда перед пересчетом, чтобы они не двоились
+    // Очищаем старые поезда перед пересчетом
     document.querySelectorAll('.train-crawler').forEach(el => el.remove());
 
     document.querySelectorAll('.tl').forEach(tl => {
@@ -579,7 +596,7 @@ function updateRealTimeTracking() {
         const isReverse = tl.classList.contains('reverse');
         const themeColor = isReverse ? 'var(--s)' : 'var(--p)';
 
-        // ЛОГИКА ПРОГРЕСС-БАРА В ШАПКЕ
+        // ПРОГРЕСС-БАР В ШАПКЕ
         if (now >= firstTsa && now <= lastTsd) {
             tripActive = true;
             const tripPercent = ((now - firstTsa) / (lastTsd - firstTsa)) * 100;
@@ -590,7 +607,7 @@ function updateRealTimeTracking() {
             pText.classList.add('visible');
         }
 
-        // ЕСЛИ ПОЕЗДКА ЕЩЕ НЕ НАЧАЛАСЬ
+        // ДО ПОЕЗДКИ
         if (now < firstTsa) {
             rows.forEach(r => r.classList.remove('past', 'active-stop', 'en-route'));
             rows[0].classList.add('en-route');
@@ -600,7 +617,7 @@ function updateRealTimeTracking() {
             return;
         }
 
-        // ЕСЛИ ПОЕЗДКА УЖЕ ОКОНЧЕНА
+        // ПОСЛЕ ПОЕЗДКИ
         if (now > lastTsd) {
             rows.forEach(r => {
                 r.classList.remove('active-stop', 'en-route');
@@ -617,7 +634,7 @@ function updateRealTimeTracking() {
             return;
         }
 
-        // ЛОГИКА СТАНЦИЙ И ДВИЖЕНИЯ ПОЕЗДА
+        // ЛОГИКА ТАЙМЛАЙНА
         rows.forEach((row, index) => {
             const tsa = parseInt(row.getAttribute('data-tsa'));
             const tsd = parseInt(row.getAttribute('data-tsd'));
@@ -630,7 +647,7 @@ function updateRealTimeTracking() {
                 // Станция пройдена
                 row.classList.add('past');
             } else if (now >= tsa && now <= tsd) {
-                // Прямо сейчас стоим на этой станции
+                // Прямо сейчас стоим на станции
                 row.classList.add('active-stop');
                 foundCurrent = true;
                 if (!hasAutoScrolled) triggerScroll(row);
@@ -643,16 +660,29 @@ function updateRealTimeTracking() {
                         row.classList.add('en-route');
                         row.querySelector('.tl-station').insertAdjacentHTML('beforeend', '<span class="en-route-badge">В пути к станции</span>');
 
-                        // ДОБАВЛЯЕМ И ДВИГАЕМ ПОЕЗД
+                        // ДОБАВЛЯЕМ ПОЕЗД
                         row.querySelector('.tl-station').insertAdjacentHTML('afterbegin', '<div class="train-crawler">🚂</div>');
                         const activeCrawler = row.querySelector('.train-crawler');
 
-                        // Высчитываем прогресс (от 0.0 до 1.0)
+                        // 🧮 ТОЧНЫЙ ПИКСЕЛЬНЫЙ РАСЧЕТ КООРДИНАТ
                         const segmentProgress = (now - prevTsd) / (tsa - prevTsd);
-                        // Теперь мы берем высоту всей ячейки текущей станции.
-                        // -100% = визуально на уровне прошлой станции. 0% = доехали до текущей.
-                        const topValue = -100 + (segmentProgress * 100);
-                        activeCrawler.style.top = topValue + '%';
+
+                        const prevStation = prevRow.querySelector('.tl-station');
+                        const currStation = row.querySelector('.tl-station');
+
+                        const prevRect = prevStation.getBoundingClientRect();
+                        const currRect = currStation.getBoundingClientRect();
+
+                        // Y-координата центра кружочка прошлой и текущей станций
+                        const prevDotY = prevRect.top + (prevRect.height / 2);
+                        const currDotY = currRect.top + (currRect.height / 2);
+
+                        // Смещение (в пикселях) относительно начала текущего блока станции
+                        const startY = prevDotY - currRect.top;
+                        const endY = currDotY - currRect.top;
+
+                        const currentY = startY + (endY - startY) * segmentProgress;
+                        activeCrawler.style.top = currentY + 'px';
 
                         foundCurrent = true;
                         if (!hasAutoScrolled) triggerScroll(row);
