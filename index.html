@@ -303,8 +303,8 @@ body.fonts-loaded {
 document.fonts.ready.then(() => {
     document.body.classList.add('fonts-loaded');
 });
-// Фоллбэк: если что-то пошло не так, всё равно показываем приложение через 800мс
-setTimeout(() => document.body.classList.add('fonts-loaded'), 800);
+// Фоллбэк: если что-то пошло не так, всё равно показываем приложение через 1000мс
+setTimeout(() => document.body.classList.add('fonts-loaded'), 1000);
 
 // ══════════════ СКРЫТИЕ ШАПКИ ПРИ СКРОЛЛЕ ══════════════
 let lastScroll = 0;
