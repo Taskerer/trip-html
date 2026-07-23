@@ -27,13 +27,13 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       const fetchPromise = fetch(event.request).then(networkResponse => {
-        // Кэшируем шрифты Google и новые запросы на лету
-        if (event.request.method === 'GET' && networkResponse.status === 200) {
+        // Кэшируем успешные ответы (200) и сторонние "непрозрачные" ответы (0) - это наши шрифты!
+        if (event.request.method === 'GET' && (networkResponse.status === 200 || networkResponse.status === 0)) {
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, networkResponse.clone()));
         }
         return networkResponse;
       }).catch(() => {
-        // Если интернета нет, ошибки сети подавляются, показывается кэш
+        // Ошибка сети (игнорируем, будет отдан кэш)
       });
       // Моментально возвращаем кэш (если есть), а в фоне обновляем
       return cachedResponse || fetchPromise;
