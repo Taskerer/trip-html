@@ -7,10 +7,9 @@
 <link rel="manifest" href="manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ЮГ 2026 🌴</title>
-<!-- Предзагрузка файла стилей Google Fonts (наивысший приоритет) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=block">
-
-<!-- Само подключение шрифтов. &display=block запретит браузеру показывать "уродливый" шрифт до загрузки -->
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;700;900&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&display=block" rel="stylesheet">
 <style>
 /* ═════════ CSS ПЕРЕМЕННЫЕ И ТЕМЫ ═════════ */
@@ -63,10 +62,17 @@ html, body {
   overflow-x:hidden;
   padding-top:60px;
   -webkit-font-smoothing: antialiased;
-  transition:background .3s,color .3s;
-  /* Скрываем скроллбар для идеального центрирования на мобилках */
+
+  /* Добавлены свойства для анимации плавного появления */
+  opacity: 0;
+  transition: opacity 0.3s ease-out, background 0.3s, color 0.3s;
+
   scrollbar-width: none;
   -ms-overflow-style: none;
+}
+/* Класс, который покажет приложение, когда шрифты будут готовы */
+body.fonts-loaded {
+  opacity: 1;
 }
 ::-webkit-scrollbar {
   display: none;
@@ -280,6 +286,13 @@ html, body {
 </div>
 
 <script>
+// Плавное появление интерфейса ТОЛЬКО после загрузки шрифтов
+document.fonts.ready.then(() => {
+    document.body.classList.add('fonts-loaded');
+});
+// Фоллбэк: если что-то пошло не так, всё равно показываем приложение через 800мс
+setTimeout(() => document.body.classList.add('fonts-loaded'), 800);
+
 // ══════════════ СКРЫТИЕ ШАПКИ ПРИ СКРОЛЛЕ ══════════════
 let lastScroll = 0;
 const topBar = document.querySelector('.top-bar');
