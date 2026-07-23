@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="darkreader-lock">
-<meta name="theme-color" content="#7B5800">
+<meta name="theme-color" content="#000000">
 <link rel="manifest" href="manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>ЮГ 2026 🌴</title>
@@ -326,17 +326,22 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ══════════════ ТЕМА И ПОПАПЫ ══════════════
-let dark = localStorage.getItem('theme') === 'dark' ||
-           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+// 1. По умолчанию светлая, включаем тёмную ТОЛЬКО если пользователь ранее её выбрал
+let dark = localStorage.getItem('theme') === 'dark';
 
-if (dark) toggleTheme(true); // Применяем при загрузке
+// 2. Если в памяти была тёмная — сразу применяем её при загрузке
+if (dark) {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  document.getElementById('ti').textContent = '☀️';
+}
 
-function toggleTheme(init = false) {
-  if (!init) dark = !dark;
+function toggleTheme() {
+  dark = !dark;
+  // Сохраняем выбор в память
   localStorage.setItem('theme', dark ? 'dark' : 'light');
+
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   document.getElementById('ti').textContent = dark ? '☀️' : '🌙';
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#14110E' : '#7B5800');
 }
 
 const POPUPS = {
