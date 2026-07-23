@@ -238,6 +238,11 @@ body.fonts-loaded {
 .popup-body p { margin-bottom:10px; }
 .popup-berth { background:var(--surf-hi); border-radius:var(--r-l); padding:12px; font-family:var(--fm); font-size:12px; line-height:1.8; margin:12px 0; }
 </style>
+
+<noscript>
+  <style>body { opacity: 1 !important; }</style>
+</noscript>
+
 </head>
 <body>
 
@@ -321,16 +326,17 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ══════════════ ТЕМА И ПОПАПЫ ══════════════
-let dark = false;
-function toggleTheme() {
-  dark = !dark;
+let dark = localStorage.getItem('theme') === 'dark' ||
+           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+if (dark) toggleTheme(true); // Применяем при загрузке
+
+function toggleTheme(init = false) {
+  if (!init) dark = !dark;
+  localStorage.setItem('theme', dark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   document.getElementById('ti').textContent = dark ? '☀️' : '🌙';
-
-  // Меняем цвет статус-бара
-  document.querySelector('meta[name="theme-color"]').setAttribute(
-      'content', dark ? '#14110E' : '#7B5800'
-  );
+  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#14110E' : '#7B5800');
 }
 
 const POPUPS = {

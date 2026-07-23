@@ -1,11 +1,13 @@
-const CACHE_VERSION = 'v6'; // Обязательно v6, чтобы перезаписать старые правила
+const CACHE_VERSION = 'v7';
 const APP_CACHE = `ug-app-${CACHE_VERSION}`;
 const FONT_CACHE = `ug-fonts-v2`; // Обновляем кэш шрифтов
 
 const URLS_TO_CACHE = [
   './',
   './index.html',
-  './manifest.json'
+  './manifest.json',
+  './icon-192.png',
+  './icon-512.png'
 ];
 
 self.addEventListener('install', event => {
