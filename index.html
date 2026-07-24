@@ -73,26 +73,26 @@
 
 /* ═════════ БАЗОВЫЕ СТИЛИ И СБРОС (БЕЗ ПОЛОСЫ ПРОКРУТКИ) ═════════ */
 *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
-html, body {
-  background:var(--bg);
-  color:var(--on-bg);
-  font-family:var(--fb);
-  line-height:1.5;
-  width:100%;
-  max-width:100%;
-  min-height:100dvh; /* Заливаем низ экрана */
-  overflow-x:hidden;
-  padding-top:60px;
-  padding-bottom: env(safe-area-inset-bottom); /* Адаптация под полоску жестов */
-  -webkit-font-smoothing: antialiased;
-  transition:background .3s,color .3s;
+html {
+  background: var(--bg); /* Заливает системный фон, убирая белые/серые моргания внизу */
   scrollbar-width: none;
   -ms-overflow-style: none;
-  overscroll-behavior-y: none; /* Убивает серые/белые системные отскоки */
+  overscroll-behavior-y: none; /* Убивает системные отскоки без вреда для скролла */
+  transition: background .3s;
 }
 
-/* Прячем ТОЛЬКО body до загрузки шрифтов */
 body {
+  color: var(--on-bg);
+  font-family: var(--fb);
+  line-height: 1.5;
+  width: 100%;
+  min-height: 100dvh;
+  overflow-x: hidden; /* ВАЖНО: скрываем горизонт только тут, чтобы не ломать скролл */
+  padding-top: 60px;
+  /* Добавляем +20px к полоске жестов, чтобы карточки не прилипали вплотную к низу */
+  padding-bottom: calc(20px + env(safe-area-inset-bottom));
+  -webkit-font-smoothing: antialiased;
+  transition: color .3s;
   opacity: 0;
 }
 
