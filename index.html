@@ -12,6 +12,12 @@
 
 <link rel="manifest" href="manifest.json">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<script>
+  // 🚀 ПРИМЕНЯЕМ ТЕМУ МГНОВЕННО ДО ОТРИСОВКИ (Фикс бага PWA)
+  if (localStorage.getItem('theme') === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+</script>
 <title>ЮГ 2026 🌴</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -74,12 +80,15 @@ html, body {
   line-height:1.5;
   width:100%;
   max-width:100%;
+  min-height:100dvh; /* Заливаем низ экрана */
   overflow-x:hidden;
   padding-top:60px;
+  padding-bottom: env(safe-area-inset-bottom); /* Адаптация под полоску жестов */
   -webkit-font-smoothing: antialiased;
   transition:background .3s,color .3s;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  overscroll-behavior-y: none; /* Убивает серые/белые системные отскоки */
 }
 
 /* Прячем ТОЛЬКО body до загрузки шрифтов */
@@ -142,6 +151,8 @@ body.fonts-loaded {
   cursor:pointer;
   transform: translateZ(0);
   backface-visibility: hidden;
+  will-change: transform;
+  contain: content;
   transition:transform .2s,box-shadow .2s;
 }
 .rcard:hover { box-shadow:var(--e2); transform:translateY(-2px) translateZ(0); }
@@ -156,7 +167,7 @@ body.fonts-loaded {
 .rc-info { background:color-mix(in srgb,var(--on-bg) 4%,transparent); padding:12px; border-radius:var(--r-m); font-size:14px; display:flex; flex-direction:column; gap:6px; }
 
 /* ═════════ ТАЙМЛАЙН (ПОДРОБНЫЙ МАРШРУТ) ═════════ */
-.tl { background:var(--surf-c); border-radius:var(--r-xl); padding:12px 20px; box-shadow:var(--e1); transform: translateZ(0); overflow:hidden; }
+.tl { background:var(--surf-c); border-radius:var(--r-xl); padding:12px 20px; box-shadow:var(--e1); transform: translateZ(0); will-change: transform; contain: content; overflow:hidden; }
 .tl-day { font-family:var(--fd); font-size:14px; font-weight:700; background:color-mix(in srgb,var(--p) 15%,transparent); color:var(--p); padding:6px 12px; border-radius:var(--r-m); margin:16px 0 8px; text-align:center; }
 .tl.reverse .tl-day { background:color-mix(in srgb,var(--s) 15%,transparent); color:var(--s); }
 .tl-tz { font-family:var(--fm); font-size:11px; color:var(--on-sv); opacity:.8; text-align:center; margin-bottom:12px; font-style:italic; }
@@ -332,17 +343,18 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ══════════════ ТЕМА И ПОПАПЫ ══════════════
-let dark = localStorage.getItem('theme') === 'dark' ||
-           (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+let dark = localStorage.getItem('theme') === 'dark';
 
-if (dark) toggleTheme(true); // Применяем при загрузке
+// Просто меняем иконку (Сама тема уже применилась в <head>)
+if (dark) {
+  document.getElementById('ti').textContent = '☀️';
+}
 
-function toggleTheme(init = false) {
-  if (!init) dark = !dark;
+function toggleTheme() {
+  dark = !dark;
   localStorage.setItem('theme', dark ? 'dark' : 'light');
   document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
   document.getElementById('ti').textContent = dark ? '☀️' : '🌙';
-  document.querySelector('meta[name="theme-color"]').setAttribute('content', dark ? '#14110E' : '#7B5800');
 }
 
 const POPUPS = {
@@ -614,6 +626,7 @@ renderRoute(route358, 'tl-obratno');
 let hasAutoScrolled = false;
 
 function updateRealTimeTracking() {
+  requestAnimationFrame(() => {
     let now = Date.now();
 
     // Для теста поезда в пути раскомментируйте эту строку (например, утро 29 июля):
@@ -755,6 +768,7 @@ function updateRealTimeTracking() {
         pText.classList.remove('visible');
         pBar.style.width = '0%';
     }
+  });
 }
 
 function triggerScroll(row) {
@@ -766,9 +780,9 @@ function triggerScroll(row) {
     }, 400);
 }
 
-// Запускаем трекер при загрузке и обновляем каждую секунду
+// Запускаем трекер при загрузке и обновляем каждые 3 секундыы
 updateRealTimeTracking();
-setInterval(updateRealTimeTracking, 1000);
+setInterval(updateRealTimeTracking, 3000);
 
 // ══════════════ ОФЛАЙН И PWA (SERVICE WORKER) ══════════════
 if ('serviceWorker' in navigator) {
