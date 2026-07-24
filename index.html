@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="darkreader-lock">
@@ -14,8 +14,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <script>
   // 🚀 ПРИМЕНЯЕМ ТЕМУ МГНОВЕННО ДО ОТРИСОВКИ (Фикс бага PWA)
-  if (localStorage.getItem('theme') === 'dark') {
-    document.documentElement.setAttribute('data-theme', 'dark');
+  // Теперь по умолчанию тёмная, поэтому проверяем, не выбрана ли светлая
+  if (localStorage.getItem('theme') === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
   }
 </script>
 <title>ЮГ 2026 🌴</title>
@@ -340,12 +341,11 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 // ══════════════ ТЕМА И ПОПАПЫ ══════════════
-let dark = localStorage.getItem('theme') === 'dark';
+// По умолчанию тема тёмная. Переменная dark = true, ЕСЛИ в памяти НЕТ слова 'light'
+let dark = localStorage.getItem('theme') !== 'light';
 
-// Просто меняем иконку (Сама тема уже применилась в <head>)
-if (dark) {
-  document.getElementById('ti').textContent = '☀️';
-}
+// При загрузке страницы ставим правильную иконку
+document.getElementById('ti').textContent = dark ? '☀️' : '🌙';
 
 function toggleTheme() {
   dark = !dark;
